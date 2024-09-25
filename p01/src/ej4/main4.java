@@ -10,9 +10,6 @@ public class main4 {
 		File[] ficheros = d.listFiles();
 		if (d.isFile())
 			System.out.println(d.getName() + " es un fichero");
-		else
-			(ficheros);
-
 	}
 
 	public static void main(String[] args) {
