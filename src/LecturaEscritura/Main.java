@@ -8,7 +8,7 @@ public class Main {
 		FileReader salida = new FileReader(fichero);
 		BufferedReader buffer = new BufferedReader(salida);
 		String texto;
-		if((texto=buffer.readLine())!=" ") {
+		while((texto=buffer.readLine())!=null) {
 			System.out.println(texto);
 		}
 		}
