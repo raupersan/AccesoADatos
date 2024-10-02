@@ -33,45 +33,45 @@ public class FicherosBinarios {
 	}
 
 	public static void escribirCoches(String ruta) {
-		//Creo el descriptor fichero
+		// Creo el descriptor fichero
 		File fichero = new File(ruta);
 
 		try {
-			//Indico que abro el fichero para escritura
+			// Indico que abro el fichero para escritura
 			FileOutputStream fos = new FileOutputStream(fichero);
-			//Indico que lo que voy a escribit son objetos
+			// Indico que lo que voy a escribit son objetos
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			
+
 			Coche c1 = new Coche(5, "Opel", "Astra", 500, 200, 2000);
 			Coche c2 = new Coche(5, "Opel", "Astra", 500, 200, 2000);
-		
+
 			oos.writeObject(c1);
 			oos.writeObject(c2);
-			
-			}
-		catch(IOException e) {
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
 	public static void lecturaObjetos(String ruta) {
 
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File (ruta)));
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(ruta)));
+
+			Coche coche1 = (Coche) ois.readObject();
+			Coche coche2 = (Coche)ois.readObject();
 			
-			Coche c1 = new Coche(5, "Opel", "Astra", 500, 200, 2000);
-			Coche c2 = new Coche(5, "Opel", "Astra", 500, 200, 2000);
-		
-		
-			
-			}
-		catch(IOException e) {
+			System.out.println(coche1.getMarca()+ " " +coche1.getModelo());
+
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	public static void main(String[] args) {
 		String ruta = "fichero.bin";
-		String ruta2= "fichero2.bin";
+		String ruta2 = "fichero2.bin";
 		escribirBinario(ruta);
 		escribirCoches(ruta2);
 	}
