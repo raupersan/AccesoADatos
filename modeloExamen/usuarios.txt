@@ -1,0 +1,4 @@
+Samuel;1234;administrador
+Beatriz:123;administrador
+Leticia;12;usuario
+Pepe;123abd;lector

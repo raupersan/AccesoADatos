@@ -7,7 +7,7 @@ public class main5 {
 	public static Scanner sc = new Scanner(System.in);
 
 	public static void comprobarPermisos(File fichero) {
-		String permisos = "";
+		String permisos = " ";
 		char cambiarPermisos;
 		if (fichero.canRead())
 			permisos = permisos + "r";
