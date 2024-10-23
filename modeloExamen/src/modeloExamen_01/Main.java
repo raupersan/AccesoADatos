@@ -125,7 +125,9 @@ public class Main {
 		return new Persona(nombre, contraseña, rol);
 	}
 	public static ArrayList<Persona> escribirPersona(Persona persona, String ruta, ArrayList<Persona> personas) throws FileNotFoundException, IOException {
-		
+		BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\Raul\\Desktop\\Segundo\\aad\\AccesoADatos\\modeloExamen\\usuarios.txt", true));
+		bw.write("\n"+persona.getNombre()+ ";"+persona.getContraseña()+";"+persona.getRol());
+		bw.close();
 		personas.add(persona);
 		return personas;
 	}
