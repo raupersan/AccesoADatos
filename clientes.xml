@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF_8"?>
+<listadeclientes>
+	<cliente>
+		<numerodecliente>12345</numerodecliente>
+		<Nombre>Luis García</Nombre>
+		<Direccion>	
+			<Calle>Calle de la princesa</Calle>
+			<Ciudad>Madrid</Ciudad>
+			<Codigo Postal>28020</Codigo>
+			<Pais>España</Pais>
+		</Direccion>
+	</cliente>
+</listadeclientes>
