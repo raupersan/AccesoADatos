@@ -32,6 +32,8 @@ public class Main {
             	Element cliente = (Element) nodo;
                 // Extraer los datos de cada <empleado>
             	String numCliente= cliente.getElementsByTagName("numerodecliente").item(i).getTextContent();
+            	String nombre= cliente.getElementsByTagName("nombre").item(i).getTextContent();
+            	String direccion = cliente.getElementsByTagName("calle").item(i).getTextContent() +", " +cliente.getElementsByTagName("Ciudad").item(i).getTextContent() + ", " +cliente.getElementsByTagName("calle").item(i).getTextContent();
             }
         }
 	}
