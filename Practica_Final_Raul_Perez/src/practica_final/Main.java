@@ -17,7 +17,11 @@ public class Main {
 
 	private static void cargarEmpleados(String ruta) throws ParserConfigurationException, IOException ,  SAXException {
         // Lista para almacenar las líneas que escribiremos en el archivo
-        ArrayList<String> empleados= new ArrayList<>();
+        ArrayList<String> clientes= new ArrayList<>();
+        String numCliente = null;
+        String nombre;
+        String direccion;
+        String linea;
         // Parsear el archivo XML
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
@@ -31,11 +35,16 @@ public class Main {
             if (nodo.getNodeType() == Node.ELEMENT_NODE) {
             	Element cliente = (Element) nodo;
                 // Extraer los datos de cada <empleado>
-            	String numCliente= cliente.getElementsByTagName("numerodecliente").item(i).getTextContent();
-            	String nombre= cliente.getElementsByTagName("nombre").item(i).getTextContent();
-            	String direccion = cliente.getElementsByTagName("calle").item(i).getTextContent() +", " +cliente.getElementsByTagName("Ciudad").item(i).getTextContent() + ", " +cliente.getElementsByTagName("calle").item(i).getTextContent();
+            	numCliente= cliente.getElementsByTagName("numerodecliente").item(i).getTextContent();
+            	nombre= cliente.getElementsByTagName("nombre").item(i).getTextContent();
+            	direccion = cliente.getElementsByTagName("calle").item(i).getTextContent() +", " +cliente.getElementsByTagName("Ciudad").item(i).getTextContent() + ", " +cliente.getElementsByTagName("calle").item(i).getTextContent();
+            	linea = "numerodecliente:" + numCliente + "\nombre: " + nombre + "\ndirección: " + direccion;
+            	clientes.add(linea);
             }
         }
+        //guardamos en un fichero cuyo nombre sea el número del cliente y que esté en formato txt
+        Path salida= Paths.get(numCliente + ".txt");
+        Files.write(salida, clientes, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 	}
 
 
