@@ -15,9 +15,10 @@ public class Main {
 		}
 	}
 
-	private static void cargarEmpleados(String ruta) throws ParserConfigurationException, IOException ,  SAXException {
+	private static ArrayList<Cliente> cargarEmpleados(String ruta) throws ParserConfigurationException, IOException ,  SAXException {
         // Lista para almacenar las líneas que escribiremos en el archivo
         ArrayList<String> clientes= new ArrayList<>();
+        ArrayList<Cliente> arrayCliente = new ArrayList<Cliente>();
         String numCliente = null;
         String nombre;
         String direccion;
@@ -38,6 +39,8 @@ public class Main {
             	numCliente= cliente.getElementsByTagName("numerodecliente").item(i).getTextContent();
             	nombre= cliente.getElementsByTagName("nombre").item(i).getTextContent();
             	direccion = cliente.getElementsByTagName("calle").item(i).getTextContent() +", " +cliente.getElementsByTagName("Ciudad").item(i).getTextContent() + ", " +cliente.getElementsByTagName("calle").item(i).getTextContent();
+            	Cliente clienteNuevo = new Cliente(numCliente, nombre, direccion);
+            	arrayCliente.add(clienteNuevo);
             	linea = "numerodecliente:" + numCliente + "\nombre: " + nombre + "\ndirección: " + direccion;
             	clientes.add(linea);
             }
@@ -45,16 +48,28 @@ public class Main {
         //guardamos en un fichero cuyo nombre sea el número del cliente y que esté en formato txt
         Path salida= Paths.get(numCliente + ".txt");
         Files.write(salida, clientes, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        return arrayCliente;
+	}
+	private static void leerFicheroBinario(Path bin) throws IOException {
+		byte [] bytes= Files.readAllBytes(bin);
+		List lista = Files.readAllLines(bin);
+		for (Object f : lista) {
+			System.out.println(f);
+		}
 	}
 
 
 	public static void main(String[] args) {
 			Path dir = Paths.get("Clientes");
 			String ruta = "clientes.xml";
-		
+			String ficheroBin="gasolinera.bin";	
+			Path bin = Paths.get(ficheroBin);
+	        ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+
 	        try {
 		        crearDirectorio(dir);
-				cargarEmpleados(ruta);
+			listaClientes = cargarEmpleados(ruta);
+				leerFicheroBinario(bin);
 			} catch (ParserConfigurationException | IOException | SAXException e) {
 				e.printStackTrace();
 			}
