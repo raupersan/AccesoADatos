@@ -8,6 +8,6 @@
 			<Ciudad>Madrid</Ciudad>
 			<Codigo Postal>28020</Codigo>
 			<Pais>España</Pais>
-		</Direccion>
+		</direccion>
 	</cliente>
 </listadeclientes>

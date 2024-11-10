@@ -68,7 +68,7 @@ public class Main {
 
 	        try {
 		        crearDirectorio(dir);
-			listaClientes = cargarEmpleados(ruta);
+		        listaClientes = cargarEmpleados(ruta);
 				leerFicheroBinario(bin);
 			} catch (ParserConfigurationException | IOException | SAXException e) {
 				e.printStackTrace();
