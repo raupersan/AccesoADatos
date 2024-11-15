@@ -16,7 +16,8 @@ public class Main {
 		}
 	}
 
-	private static void cargarEmpleados(String ruta, Path dir) throws ParserConfigurationException, IOException, SAXException {
+	private static void cargarEmpleados(String ruta, Path dir)
+			throws ParserConfigurationException, IOException, SAXException {
 		// Lista para almacenar las líneas que escribiremos en el archivo
 		ArrayList<String> clientes = new ArrayList<>();
 		ArrayList<Cliente> arrayCliente = new ArrayList<Cliente>();
@@ -52,10 +53,6 @@ public class Main {
 						Files.writeString(fichero, linea);
 					}
 				}
-				// guardamos en un fichero cuyo nombre sea el número del cliente y que esté en
-				// formato txt
-				Path salida = Paths.get(numCliente + ".txt");
-				Files.write(salida, clientes, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 			}
 		}
 	}
@@ -75,7 +72,7 @@ public class Main {
 		Path bin = Paths.get(ficheroBin);
 		ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 
-		try {			
+		try {
 			crearDirectorio(dir);
 			cargarEmpleados(ruta, dir);
 			leerFicheroBinario(bin);
