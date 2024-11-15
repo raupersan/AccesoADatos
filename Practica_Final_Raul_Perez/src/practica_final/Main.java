@@ -37,16 +37,14 @@ public class Main {
 			Node nodo = listaClientes.item(i);
 			if (nodo.getNodeType() == Node.ELEMENT_NODE) {
 				Element cliente = (Element) nodo;
-				numCliente = cliente.getElementsByTagName("numCliente").item(i).getTextContent();
-				nombre = cliente.getElementsByTagName("Nombre").item(i).getTextContent();
-				NodeList direccionCompleta = cliente.getChildNodes();
-				for (int j = 0; j < direccionCompleta.getLength(); j++) {
-					Node nodo2 = direccionCompleta.item(j);
-					if (nodo2.getNodeType() == Node.ELEMENT_NODE) {
-						Element direccion2 = (Element) nodo2;
-						direccion = direccion2.getElementsByTagName("Calle").item(j).getTextContent() + ", "
-								+ direccion2.getElementsByTagName("Ciudad").item(j).getTextContent() + ","
-								+ direccion2.getElementsByTagName("Codigo Postal").item(j).getTextContent();
+				NodeList clientesCompleto = cliente.getChildNodes();
+				for (int j = 0; j < clientesCompleto.getLength(); j++) {
+					Node datosCliente = clientesCompleto.item(j);
+					if (datosCliente.getNodeType() == Node.ELEMENT_NODE) {
+						Element datos = (Element) datosCliente;
+						numCliente = cliente.getElementsByTagName("numCliente").item(i).getTextContent();
+						nombre = cliente.getElementsByTagName("Nombre").item(i).getTextContent();
+						direccion = datos.getElementsByTagName("Dirección").item(j).getTextContent();
 						linea = "numerodecliente:" + numCliente + "\nnombre: " + nombre + "dirección: " + direccion;
 						arrayCliente.add(new Cliente(numCliente, nombre, direccion));
 						Path fichero = dir.resolve(numCliente + ".txt");
