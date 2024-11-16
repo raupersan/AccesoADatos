@@ -87,7 +87,7 @@ public class Main {
 		
 	}
 
-	private static void menuGasolinera(Gasolinera gasolinera) {
+	private static void menuGasolinera(Gasolinera gasolinera, Path tickets, ArrayList<Cliente> listaClientes, ArrayList<Gasolinera> listaGasolineras) {
 		int opcion;
 		int litros;
 		System.out.println("¿Qué quieres hacer?");
@@ -115,7 +115,7 @@ public class Main {
 			listaClientes = cargarEmpleados(ruta, dir);
 			listaGasolineras = leerGasolinera(ficheroBin);
 			menu(listaClientes,listaGasolineras);
-			menuGasolinera(listaGasolineras.get(0));
+			menuGasolinera(listaGasolineras.get(0), tickets, listaClientes,listaGasolineras);
 		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
