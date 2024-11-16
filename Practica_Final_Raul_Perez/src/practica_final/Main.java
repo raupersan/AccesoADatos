@@ -1,29 +1,37 @@
 package practica_final;
 
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.file.*;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+	static Scanner sc = new Scanner(System.in);
 	private static void crearDirectorio(Path dir) throws IOException {
 		if (!Files.exists(dir)) {
 			Files.createDirectories(dir);
 		}
 	}
 
-	private static void cargarEmpleados(String ruta, Path dir)
+	private static ArrayList<Cliente> cargarEmpleados(String ruta, Path dir)
 			throws ParserConfigurationException, IOException, SAXException {
 		// Lista para almacenar las líneas que escribiremos en el archivo
 		ArrayList<String> clientes = new ArrayList<>();
 		ArrayList<Cliente> arrayCliente = new ArrayList<Cliente>();
 		String numCliente = null;
-		String nombre;
-		String direccion;
+		String nombre = null;
+		String direccion = null;
 		String linea;
 		// Parsear el archivo XML
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -31,7 +39,7 @@ public class Main {
 		Document doc = db.parse(Paths.get(ruta).toFile());
 		// Normalizar el XML
 		doc.getDocumentElement().normalize();
-		NodeList listaClientes = doc.getElementsByTagName("Clientes");
+		NodeList listaClientes = doc.getElementsByTagName("cliente");
 		// Recorrer cada nodo cliente
 		for (int i = 0; i < listaClientes.getLength(); i++) {
 			Node nodo = listaClientes.item(i);
@@ -40,41 +48,57 @@ public class Main {
 				NodeList clientesCompleto = cliente.getChildNodes();
 				for (int j = 0; j < clientesCompleto.getLength(); j++) {
 					Node datosCliente = clientesCompleto.item(j);
-					if (datosCliente.getNodeType() == Node.ELEMENT_NODE) {
-						Element datos = (Element) datosCliente;
-						numCliente = cliente.getElementsByTagName("numCliente").item(i).getTextContent();
-						nombre = cliente.getElementsByTagName("Nombre").item(i).getTextContent();
-						direccion = datos.getElementsByTagName("Dirección").item(j).getTextContent();
-						linea = "numerodecliente:" + numCliente + "\nnombre: " + nombre + "dirección: " + direccion;
-						arrayCliente.add(new Cliente(numCliente, nombre, direccion));
-						Path fichero = dir.resolve(numCliente + ".txt");
-						Files.writeString(fichero, linea);
-					}
+					numCliente = numCliente + clientesCompleto.item(j).getNodeType()
+							+ clientesCompleto.item(j).getTextContent();
+					nombre = nombre + clientesCompleto.item(j).getNodeType()
+							+ clientesCompleto.item(j).getTextContent();
+					direccion = direccion + clientesCompleto.item(j).getNodeType()
+							+ clientesCompleto.item(j).getTextContent();
+					linea = "numerodecliente:" + numCliente + "\nnombre: " + nombre + "dirección: " + direccion;
+					arrayCliente.add(new Cliente(numCliente, nombre, direccion));
+					Path fichero = dir.resolve(numCliente + ".txt");
+					Files.writeString(fichero, linea);
+
 				}
 			}
 		}
+		return arrayCliente;
 	}
 
-	private static void leerFicheroBinario(Path bin) throws IOException {
-		byte[] bytes = Files.readAllBytes(bin);
-		List lista = Files.readAllLines(bin);
-		for (Object f : lista) {
-			System.out.println(f);
+	private static ArrayList<Gasolinera> leerGasolinera(String ruta) throws IOException, ClassNotFoundException {
+		ArrayList<Gasolinera> gasolineras = new ArrayList<Gasolinera>();
+		Path path = Paths.get(ruta);
+		List<String> lineas = Files.readAllLines(path);
+		for (String linea : lineas) {
+			byte[] bytes = Base64.getDecoder().decode(linea);
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+			Gasolinera gasolinera = (Gasolinera) ois.readObject();
+			gasolineras.add(gasolinera);
 		}
+		return gasolineras;
+	}
+
+	private static void menu(ArrayList<Cliente> listaClientes, ArrayList<Gasolinera> listaGasolineras) {
+		String usuario;
+		System.out.println("Introduce tu número de usuario");
+		usuario= sc.nextLine();
+		System.out.println("Se te sugiere la gasolinera " + listaGasolineras.get(0) + " pero a continuación podrás filtrar por la"
+				+ "que necesites");
+		System.out.println("¿Qué quieres hacer?");
 	}
 
 	public static void main(String[] args) {
 		Path dir = Paths.get("Clientes");
 		String ruta = "clientes.xml";
 		String ficheroBin = "gasolinera.bin";
-		Path bin = Paths.get(ficheroBin);
 		ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
-
+		ArrayList<Gasolinera> listaGasolineras = new ArrayList<Gasolinera>();
 		try {
 			crearDirectorio(dir);
-			cargarEmpleados(ruta, dir);
-			leerFicheroBinario(bin);
-		} catch (ParserConfigurationException | IOException | SAXException e) {
+			listaClientes = cargarEmpleados(ruta, dir);
+			listaGasolineras = leerGasolinera(ficheroBin);
+			menu(listaClientes,listaGasolineras);
+		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 

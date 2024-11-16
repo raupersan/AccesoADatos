@@ -1,6 +1,8 @@
 package practica_final;
 
-public class Gasolinera {
+import java.io.Serializable;
+
+public class Gasolinera implements Serializable {
 	private String nombre;
 	private String ubicacion;
 	private double litros95;
