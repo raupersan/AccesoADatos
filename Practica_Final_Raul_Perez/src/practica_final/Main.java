@@ -84,20 +84,38 @@ public class Main {
 		usuario= sc.nextLine();
 		System.out.println("Se te sugiere la gasolinera " + listaGasolineras.get(0) + " pero a continuación podrás filtrar por la"
 				+ "que necesites");
+		
+	}
+
+	private static void menuGasolinera(Gasolinera gasolinera) {
+		int opcion;
+		int litros;
 		System.out.println("¿Qué quieres hacer?");
+		System.out.println("1. Repostar Gasolina");
+		System.out.println("2. Repostar Diesel");
+		opcion = sc.nextInt();
+		System.out.println("¿Cuántos litros quieres repostar?");
+		litros = sc.nextInt();
+		if(opcion == 1 && litros < gasolinera.getLitros95()) {
+			
+		}
+		
 	}
 
 	public static void main(String[] args) {
 		Path dir = Paths.get("Clientes");
+		Path tickets = Paths.get("Tickets");
 		String ruta = "clientes.xml";
 		String ficheroBin = "gasolinera.bin";
 		ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 		ArrayList<Gasolinera> listaGasolineras = new ArrayList<Gasolinera>();
 		try {
 			crearDirectorio(dir);
+			crearDirectorio(tickets);
 			listaClientes = cargarEmpleados(ruta, dir);
 			listaGasolineras = leerGasolinera(ficheroBin);
 			menu(listaClientes,listaGasolineras);
+			menuGasolinera(listaGasolineras.get(0));
 		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
