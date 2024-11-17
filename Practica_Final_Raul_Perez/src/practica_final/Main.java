@@ -13,6 +13,8 @@ import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -78,16 +80,72 @@ public class Main {
 		return gasolineras;
 	}
 
-	private static void menu(ArrayList<Cliente> listaClientes, ArrayList<Gasolinera> listaGasolineras) {
+	private static void menu(ArrayList<Cliente> listaClientes, ArrayList<Gasolinera> listaGasolineras, Path tickets) {
 		String usuario;
+		String direccion = null;
+		Gasolinera gas = null;
+		Cliente cli = null;
 		System.out.println("Introduce tu número de usuario");
 		usuario= sc.nextLine();
-		System.out.println("Se te sugiere la gasolinera " + listaGasolineras.get(0) + " pero a continuación podrás filtrar por la"
-				+ "que necesites");
-		
+		for (Cliente aux : listaClientes) {
+			if(aux.getNumCliente()==usuario) {
+				direccion=aux.getDireccion();
+				cli=aux;
+			}
+		}
+		for(Gasolinera aux : listaGasolineras) {
+			if(aux.getUbicacion()==direccion) {
+				 gas = aux;
+				System.out.println("Se te sugiere la gasolinera " + gas.getNombre() + " pero a continuación podrás filtrar por la"
+						+ "que necesites");
+			}
+		}
+		System.out.println("Qué quieres hacer?");
+		System.out.println("1.Elegir gasolinera sugerida");
+		System.out.println("2. Cambiar de gasolinera");
+		int opcion = sc.nextInt();
+		if(opcion==2) {
+			System.out.println("Elige el criterio por el cuál quieres filtrar las gasolineras");
+			System.out.println("1. Por ubicación");
+			System.out.println("2. Por precio");
+			System.out.println("3. Por ubicación primero, luego por precio");
+			System.out.println("4. Mostrar todas sin filtrar");
+			opcion = sc.nextInt();
+			switch (opcion) {
+			case 1: {
+		        Collections.sort(listaGasolineras, Comparator.comparing(g-> g.getUbicacion()));
+				listaGasolineras.forEach(System.out::println);
+		        break;
+        			}
+			case 2: {
+		        Collections.sort(listaGasolineras, Comparator.comparingDouble(g-> g.getLitros95()));
+				listaGasolineras.forEach(System.out::println);
+		        break;
+			}
+			case 3:{
+		        Collections.sort(listaGasolineras, Comparator.comparing(g-> g.getUbicacion()));
+		        Collections.sort(listaGasolineras, Comparator.comparingDouble(g-> g.getLitros95()));
+				listaGasolineras.forEach(System.out::println);
+		        break;
+			}
+			case 4: {
+				listaGasolineras.forEach(System.out::println);
+			}
+			default:
+				System.out.println("Esa no es una opción válida");
+			}
+			System.out.println("Introduce el nombre de la gasolinera deseada");
+			String nombre = sc.nextLine();
+			for (Gasolinera gasolinera : listaGasolineras) {
+				if(gasolinera.getNombre()==nombre) {
+					gas = gasolinera;
+				}
+			}
+		}
+		menuGasolinera(gas,cli, tickets , listaGasolineras);
 	}
 
-	private static void menuGasolinera(Gasolinera gasolinera, Path tickets, ArrayList<Cliente> listaClientes, ArrayList<Gasolinera> listaGasolineras) {
+	private static void menuGasolinera(Gasolinera gasolinera, Cliente cli, Path tickets, ArrayList<Gasolinera> listaGasolineras) {
 		int opcion;
 		int litros;
 		System.out.println("¿Qué quieres hacer?");
@@ -97,9 +155,25 @@ public class Main {
 		System.out.println("¿Cuántos litros quieres repostar?");
 		litros = sc.nextInt();
 		if(opcion == 1 && litros < gasolinera.getLitros95()) {
-			
+			System.out.println("No queda suficiente gasolina en esta gasolinera");
 		}
-		
+		else if(opcion == 2 && litros < gasolinera.getLitrosDiesel()) {
+			System.out.println("No queda suficiente diésel en esta gasolinera");
+		}
+		else {
+			if (opcion==1) {
+				System.out.println("Operación aceptada. Coste: " + litros*gasolinera.getPrecio95() + "€");
+			}
+			else {
+				System.out.println("Operación aceptada. Coste: " + litros*gasolinera.getPrecioDiesel() + "€");
+			}
+			crearTicket(cli,gasolinera);
+		}
+	}
+
+	private static void crearTicket(Cliente cli, Gasolinera gasolinera) {
+		Path tickets = Paths.get("Tickets");
+
 	}
 
 	public static void main(String[] args) {
@@ -114,8 +188,7 @@ public class Main {
 			crearDirectorio(tickets);
 			listaClientes = cargarEmpleados(ruta, dir);
 			listaGasolineras = leerGasolinera(ficheroBin);
-			menu(listaClientes,listaGasolineras);
-			menuGasolinera(listaGasolineras.get(0), tickets, listaClientes,listaGasolineras);
+			menu(listaClientes,listaGasolineras, tickets);
 		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
