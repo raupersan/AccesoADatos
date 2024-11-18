@@ -68,6 +68,9 @@ public class Gasolinera implements Serializable {
 	public void setPrecioDiesel(double precioDiesel) {
 		this.precioDiesel = precioDiesel;
 	}
-	
+	@Override
+	public String toString() {
+		return "Tienes: " + getLitrosDiesel()+ "l de diesel";
+	}
 	 
 }
