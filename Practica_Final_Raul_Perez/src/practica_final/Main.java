@@ -203,7 +203,7 @@ public class Main {
 	}
 
 	private static void menuUsuario(ArrayList<Gasolinera> gas, Cliente c, Path tickets) {
-		int opcion;
+		int opcion = 0;
 		Gasolinera g = new Gasolinera(null, null, opcion, opcion, opcion, opcion);
 		do {
 			System.out.println("\n=== Menú Usuario ===");
@@ -227,12 +227,12 @@ public class Main {
 				break;
 			}
 			case 3: {
-				Collections.sort(gas, Comparator.comparing(g -> g.getUbicacion()));
+				Collections.sort(gas, Comparator.comparing(ga -> g.getUbicacion()));
 				gas.forEach(System.out::println);
 				break;
 			}
 			case 4: {
-				Collections.sort(gas, Comparator.comparingDouble(g -> g.getPrecio95()));
+				Collections.sort(gas, Comparator.comparingDouble(ga -> g.getPrecio95()));
 				gas.forEach(System.out::println);
 				break;
 			}
