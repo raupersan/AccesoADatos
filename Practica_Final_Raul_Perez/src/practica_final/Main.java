@@ -210,6 +210,7 @@ public class Main {
 			menu(listaClientes,listaGasolineras, tickets);
 			login();
 		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException | InvalidPathException e) {
+			e.printStackTrace();
 		}
 
 	}

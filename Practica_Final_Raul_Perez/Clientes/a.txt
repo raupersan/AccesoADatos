@@ -1,0 +1,7 @@
+numerodecliente:12345
+nombre: Luis Garcíadirección: 	
+			Calle de la princesa
+			Madrid
+			28020
+			España
+		
