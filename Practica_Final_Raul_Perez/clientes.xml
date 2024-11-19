@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF_8"?>
+<?xml version="1.0"?>
 <listadeclientes>
 	<cliente>
 		<numerodecliente>12345</numerodecliente>
@@ -6,7 +6,7 @@
 		<Direccion>	
 			<Calle>Calle de la princesa</Calle>
 			<Ciudad>Madrid</Ciudad>
-			<Codigo Postal>28020</Codigo>
+			<Codigo_Postal>28020</Codigo_Postal>
 			<Pais>España</Pais>
 		</Direccion>
 	</cliente>

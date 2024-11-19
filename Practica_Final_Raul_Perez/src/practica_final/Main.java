@@ -27,13 +27,13 @@ public class Main {
 	}
 
 	private static ArrayList<Cliente> cargarEmpleados(String ruta, Path dir)
-			throws ParserConfigurationException, IOException, SAXException {
+			throws ParserConfigurationException, IOException, SAXException, InvalidPathException {
 		// Lista para almacenar las líneas que escribiremos en el archivo
 		ArrayList<String> clientes = new ArrayList<>();
 		ArrayList<Cliente> arrayCliente = new ArrayList<Cliente>();
-		String numCliente = null;
-		String nombre = null;
-		String direccion = null;
+		String numCliente;
+		String nombre;
+		String direccion;
 		String linea;
 		// Parsear el archivo XML
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -47,21 +47,14 @@ public class Main {
 			Node nodo = listaClientes.item(i);
 			if (nodo.getNodeType() == Node.ELEMENT_NODE) {
 				Element cliente = (Element) nodo;
-				NodeList clientesCompleto = cliente.getChildNodes();
-				for (int j = 0; j < clientesCompleto.getLength(); j++) {
-					Node datosCliente = clientesCompleto.item(j);
-					numCliente = numCliente + clientesCompleto.item(j).getNodeType()
-							+ clientesCompleto.item(j).getTextContent();
-					nombre = nombre + clientesCompleto.item(j).getNodeType()
-							+ clientesCompleto.item(j).getTextContent();
-					direccion = direccion + clientesCompleto.item(j).getNodeType()
-							+ clientesCompleto.item(j).getTextContent();
-					linea = "numerodecliente:" + numCliente + "\nnombre: " + nombre + "dirección: " + direccion;
-					arrayCliente.add(new Cliente(numCliente, nombre, direccion));
-					Path fichero = dir.resolve(numCliente + ".txt");
-					Files.writeString(fichero, linea);
-
-				}
+				numCliente = cliente.getElementsByTagName("numerodecliente").item(0).getTextContent();
+				nombre = cliente.getElementsByTagName("Nombre").item(0).getTextContent();
+				direccion = cliente.getElementsByTagName("Direccion").item(0).getTextContent();
+				linea = "numerodecliente:" + numCliente + "\nnombre: " + nombre + "dirección: " + direccion;
+				arrayCliente.add(new Cliente(numCliente, nombre, direccion));
+			
+				Path fichero = dir.resolve("a" + ".txt");
+				Files.writeString(fichero, linea);
 			}
 		}
 		return arrayCliente;
@@ -163,19 +156,45 @@ public class Main {
 		else {
 			if (opcion==1) {
 				System.out.println("Operación aceptada. Coste: " + litros*gasolinera.getPrecio95() + "€");
+				gasolinera.setLitros95(gasolinera.getLitros95()-litros);
 			}
 			else {
 				System.out.println("Operación aceptada. Coste: " + litros*gasolinera.getPrecioDiesel() + "€");
+				gasolinera.setLitrosDiesel(gasolinera.getLitrosDiesel()-litros);
 			}
-			crearTicket(cli,gasolinera);
+			try {
+				crearTicket(cli,gasolinera,litros);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}
 	}
 
-	private static void crearTicket(Cliente cli, Gasolinera gasolinera) {
+	private static void crearTicket(Cliente cli, Gasolinera gasolinera, int litros) throws IOException {
 		Path tickets = Paths.get("Tickets");
+		Integer contador = 1;
+		String linea;
+		double total = litros*gasolinera.getPrecio95();
+		
+		if(!Files.exists(tickets)){
+			Files.createDirectory(tickets);
+		}
+		linea = "Número de Ticket:" + contador + "\n" + cli.getNumCliente() + "\n" + cli.getNombre() + "\n" 
+		+ gasolinera.getNombre() + gasolinera.getUbicacion() + "\n\n" + "Gasolina 95 (" + gasolinera.getPrecio95() + ")--------"
+				+ litros + "total: " + total + " Euros";
+		Path ticket = tickets.resolve("Ticket" + contador.toString() + ".txt");
+		Files.writeString(ticket, linea);
 
 	}
-
+	private static void login() {
+		String num;
+		String contra;
+		System.out.println("Introduce tu número de cliente");
+		num = sc.nextLine();
+		System.out.println("Introduce tu contraseña");
+		contra = sc.nextLine();
+	}
 	public static void main(String[] args) {
 		Path dir = Paths.get("Clientes");
 		Path tickets = Paths.get("Tickets");
@@ -189,8 +208,8 @@ public class Main {
 			listaClientes = cargarEmpleados(ruta, dir);
 			listaGasolineras = leerGasolinera(ficheroBin);
 			menu(listaClientes,listaGasolineras, tickets);
-		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException e) {
-			e.printStackTrace();
+			login();
+		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException | InvalidPathException e) {
 		}
 
 	}
