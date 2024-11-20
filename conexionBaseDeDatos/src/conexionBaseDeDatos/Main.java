@@ -17,7 +17,7 @@ public class Main {
 		String usuario="root";
 		String password="cfgs";
 		String controlador="com.mysql.cj.jdbc.Driver";
-		String consulta = "select*from equipos where Nombre=? or Conferencia=?" ;
+		String consulta = "select*from equipos where Nombre=?or Conferencia=?" ;
 		//Conexion JDBC conector de Java con SQL
 		System.out.println("Introduce el nombre del equipo que quieres visualizar");
 		nombre = sc.nextLine();
@@ -37,7 +37,8 @@ public class Main {
 
 				while(rs.next()) {
 				
-					System.out.println(rs.getString("Nombre"));
+					System.out.print(rs.getString("Nombre"));
+					System.out.print(",");
 				}
 			}
 			else{

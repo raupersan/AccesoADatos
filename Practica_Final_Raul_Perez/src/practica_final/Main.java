@@ -60,18 +60,16 @@ public class Main {
 	}
 
 	private static ArrayList<Gasolinera> leerGasolinera(String ruta)
-			throws IOException, ClassNotFoundException, StreamCorruptedException,EOFException {
-		ArrayList<Gasolinera> gasolineras = null;
+			throws IOException, ClassNotFoundException, StreamCorruptedException, EOFException {
+		//ArrayList<Gasolinera> gasolineras = new ArrayList<Gasolinera>();
+		ArrayList<Gasolinera> gasolineras;
 		Path path = Paths.get("gasolinera.bin");
 
 		byte[] bytes = Files.readAllBytes(path);
 
-		try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
-			gasolineras = (ArrayList<Gasolinera>) objectInputStream.readObject();
-			System.out.println("Contenido del archivo: " + gasolineras);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+
+		gasolineras = (ArrayList <Gasolinera>) ois.readObject();
 		return gasolineras;
 	}
 
@@ -242,7 +240,7 @@ public class Main {
 				break;
 			}
 			case 6: {
-				informe(c,tickets);
+				informe(c, tickets);
 				break;
 			}
 			case 7: {
@@ -257,13 +255,14 @@ public class Main {
 	}
 
 	private static void informe(Cliente c, Path tickets) {
-		
+
 	}
 
 	private static void menuAdmin(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets) {
 		int opcion;
-		//Soy consciente de que se repite código en los menús de administrador y usuario
-		//Si hubiera tenido más tiempo habría escrito un código más corto
+		// Soy consciente de que se repite código en los menús de administrador y
+		// usuario
+		// Si hubiera tenido más tiempo habría escrito un código más corto
 		do {
 			System.out.println("Eres el administrador, ¿qué quieres hacer?");
 			System.out.println("1. Visualizar todos los clientes");
@@ -365,7 +364,7 @@ public class Main {
 			listaGasolineras = leerGasolinera(ficheroBin);
 			menu(listaClientes, listaGasolineras, tickets);
 			login(listaClientes, listaGasolineras, tickets);
-		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException
+		} catch (ParserConfigurationException | IOException | SAXException| ClassNotFoundException 
 				| InvalidPathException e) {
 			e.printStackTrace();
 		}
