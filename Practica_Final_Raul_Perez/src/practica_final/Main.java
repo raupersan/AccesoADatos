@@ -49,10 +49,10 @@ public class Main {
 				numCliente = cliente.getElementsByTagName("numerodecliente").item(0).getTextContent();
 				nombre = cliente.getElementsByTagName("Nombre").item(0).getTextContent();
 				direccion = cliente.getElementsByTagName("Direccion").item(0).getTextContent();
-				linea = "numerodecliente:" + numCliente + "\nnombre: " + nombre + "dirección: " + direccion;
+				linea = "numerodecliente:" + numCliente + "\nnombre: " + nombre + "\ndirección:" + direccion;
 				arrayCliente.add(new Cliente(numCliente, nombre, direccion));
 
-				Path fichero = dir.resolve("a" + ".txt");
+				Path fichero = dir.resolve(numCliente + ".txt");
 				Files.writeString(fichero, linea);
 			}
 		}
@@ -364,7 +364,7 @@ public class Main {
 			listaGasolineras = leerGasolinera(ficheroBin);
 			menu(listaClientes, listaGasolineras, tickets);
 			login(listaClientes, listaGasolineras, tickets);
-		} catch (ParserConfigurationException | IOException | SAXException| ClassNotFoundException 
+		} catch (ParserConfigurationException | IOException | SAXException| ClassNotFoundException
 				| InvalidPathException e) {
 			e.printStackTrace();
 		}
