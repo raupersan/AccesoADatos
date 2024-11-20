@@ -192,7 +192,7 @@ public class Main {
 	}
 
 	private static void login(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets, Path dir,
-			String ficheroBin) {
+			String ficheroBin) throws FileNotFoundException, IOException {
 		String num;
 		String contra;
 		System.out.println("Introduce tu número de cliente");
@@ -204,13 +204,14 @@ public class Main {
 		else {
 			for (Cliente c : cli) {
 				if (c.getNombre().equals(num)) {
-					menuUsuario(gas, c, tickets, dir);
+					menuUsuario(gas, c, tickets, dir, cli);
 				}
 			}
 		}
 	}
 
-	private static void menuUsuario(ArrayList<Gasolinera> gas, Cliente c, Path tickets, Path dir) {
+	private static void menuUsuario(ArrayList<Gasolinera> gas, Cliente c, Path tickets, Path dir,
+			ArrayList<Cliente> cli) throws IOException {
 		int opcion = 0;
 		Gasolinera g = new Gasolinera(null, null, opcion, opcion, opcion, opcion);
 		do {
@@ -226,53 +227,22 @@ public class Main {
 			opcion = sc.nextInt();
 			sc.nextLine();
 			switch (opcion) {
-			case 1: {
-				System.out.println(c);
-				break;
-			}
-			case 2: {
-				gas.forEach(System.out::println);
-				break;
-			}
-			case 3: {
-				Collections.sort(gas, Comparator.comparing(ga -> g.getUbicacion()));
-				gas.forEach(System.out::println);
-				break;
-			}
-			case 4: {
-				Collections.sort(gas, Comparator.comparingDouble(ga -> g.getPrecio95()));
-				gas.forEach(System.out::println);
-				break;
-			}
-			case 5: {
-				menuGasolinera(g, c, tickets, gas);
-				break;
-			}
-			case 6: {
-				informe(c, tickets);
-				break;
-			}
-			case 7: {
-				System.out.println("Saliendo del menú de usuario...");
-				break;
-			}
-			default: {
-				System.out.println("Opción no válida.");
-			}
+			case 1 -> System.out.println(c); // Podría llamar a la función, pero ya que un cliente sólo puede ver sus
+												// propios datos es mas eficiente de esta manera
+			case 2 -> mostrarGasolineras(gas);
+			case 3 -> filtrarGasolUbicacion(gas);
+			case 4 -> filtrarGasPorPrecio(gas);
+			case 5 -> realizarVenta(cli, gas, tickets);
+			case 6 -> estadisticas(cli, tickets);
+			case 7 -> System.out.println("Saliendo del menú de usuario...");
+			default -> System.out.println("Opción no válida.");
 			}
 		} while (opcion != 7);
 	}
 
-	private static void informe(Cliente c, Path tickets) {
-
-	}
-
 	private static void menuAdmin(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets, Path dir,
-			String ficheroBin) {
+			String ficheroBin) throws FileNotFoundException, IOException {
 		int opcion;
-		// Soy consciente de que se repite código en los menús de administrador y
-		// usuario
-		// Si hubiera tenido más tiempo habría escrito un código más corto
 		do {
 			System.out.println("Eres el administrador, ¿qué quieres hacer?");
 			System.out.println("1. Visualizar todos los clientes");
@@ -300,22 +270,15 @@ public class Main {
 			case 7 -> filtrarGasPorPrecio(gas);
 			case 8 -> agregarGasolinera(gas, ficheroBin);
 			case 9 -> realizarVenta(cli, gas, tickets);
-			case 10: {
-				estadisticas(cli, tickets);
-				break;
-			}
-			case 11: {
-				System.out.println("Saliendo del menú administrador...");
-				break;
-			}
-			default: {
-				System.out.println("Opción no válida.");
-			}
+			case 10 -> estadisticas(cli, tickets);
+			case 11 -> System.out.println("Saliendo del menú administrador...");
+			default -> System.out.println("Opción no válida.");
 			}
 		} while (opcion != 11);
 	}
 
-	private static void realizarVenta(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets) throws IOException {
+	private static void realizarVenta(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets)
+			throws IOException {
 		System.out.println("Introduce el número del usuario que quieres que realice la venta");
 		String num = sc.nextLine();
 		Cliente aux = null;
