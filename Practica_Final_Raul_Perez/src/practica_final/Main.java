@@ -5,8 +5,11 @@ import java.nio.channels.FileChannel;
 import java.nio.file.*;
 import java.io.ByteArrayInputStream;
 import java.io.EOFException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 
 import javax.xml.parsers.*;
@@ -29,7 +32,7 @@ public class Main {
 		}
 	}
 
-	private static ArrayList<Cliente> cargarEmpleados(String ruta, Path dir)
+	private static ArrayList<Cliente> cargarClientes(String ruta, Path dir)
 			throws ParserConfigurationException, IOException, SAXException, InvalidPathException {
 		ArrayList<String> clientes = new ArrayList<>();
 		ArrayList<Cliente> arrayCliente = new ArrayList<Cliente>();
@@ -49,19 +52,24 @@ public class Main {
 				numCliente = cliente.getElementsByTagName("numerodecliente").item(0).getTextContent();
 				nombre = cliente.getElementsByTagName("Nombre").item(0).getTextContent();
 				direccion = cliente.getElementsByTagName("Direccion").item(0).getTextContent();
-				linea = "numerodecliente:" + numCliente + "\nnombre: " + nombre + "\ndirección:" + direccion;
 				arrayCliente.add(new Cliente(numCliente, nombre, direccion));
-
-				Path fichero = dir.resolve(numCliente + ".txt");
-				Files.writeString(fichero, linea);
+				escribirCliente(numCliente, nombre, direccion, dir);
 			}
 		}
 		return arrayCliente;
 	}
 
+	public static void escribirCliente(String numCliente, String nombre, String direccion, Path dir)
+			throws IOException {
+		String linea = "numerodecliente:" + numCliente + "\nnombre: " + nombre + "\ndirección:" + direccion;
+		Path fichero = dir.resolve(numCliente + ".txt");
+		Files.writeString(fichero, linea);
+
+	}
+
 	private static ArrayList<Gasolinera> leerGasolinera(String ruta)
 			throws IOException, ClassNotFoundException, StreamCorruptedException, EOFException {
-		//ArrayList<Gasolinera> gasolineras = new ArrayList<Gasolinera>();
+		// ArrayList<Gasolinera> gasolineras = new ArrayList<Gasolinera>();
 		ArrayList<Gasolinera> gasolineras;
 		Path path = Paths.get("gasolinera.bin");
 
@@ -69,7 +77,7 @@ public class Main {
 
 		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
 
-		gasolineras = (ArrayList <Gasolinera>) ois.readObject();
+		gasolineras = (ArrayList<Gasolinera>) ois.readObject();
 		return gasolineras;
 	}
 
@@ -167,7 +175,7 @@ public class Main {
 		}
 	}
 
-	private static void crearTicket(Cliente cli, Gasolinera gasolinera, int litros) throws IOException {
+	private static void crearTicket(Cliente cli, Gasolinera gasolinera, double litros) throws IOException {
 		Path tickets = Paths.get("Tickets");
 		Integer contador = 1;
 		String linea;
@@ -183,7 +191,8 @@ public class Main {
 		Files.writeString(ticket, linea);
 	}
 
-	private static void login(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets) {
+	private static void login(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets, Path dir,
+			String ficheroBin) {
 		String num;
 		String contra;
 		System.out.println("Introduce tu número de cliente");
@@ -191,21 +200,21 @@ public class Main {
 		System.out.println("Introduce tu contraseña");
 		contra = sc.nextLine();
 		if (num.equals("1"))
-			menuAdmin(cli, gas, tickets);
+			menuAdmin(cli, gas, tickets, dir, ficheroBin);
 		else {
 			for (Cliente c : cli) {
 				if (c.getNombre().equals(num)) {
-					menuUsuario(gas, c, tickets);
+					menuUsuario(gas, c, tickets, dir);
 				}
 			}
 		}
 	}
 
-	private static void menuUsuario(ArrayList<Gasolinera> gas, Cliente c, Path tickets) {
+	private static void menuUsuario(ArrayList<Gasolinera> gas, Cliente c, Path tickets, Path dir) {
 		int opcion = 0;
 		Gasolinera g = new Gasolinera(null, null, opcion, opcion, opcion, opcion);
 		do {
-			System.out.println("\n=== Menú Usuario ===");
+			System.out.println("¿Qué quieres hacer?");
 			System.out.println("1. Visualizar datos del cliente");
 			System.out.println("2. Visualizar lista de gasolineras");
 			System.out.println("3. Visualizar gasolineras según ubicación");
@@ -258,7 +267,8 @@ public class Main {
 
 	}
 
-	private static void menuAdmin(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets) {
+	private static void menuAdmin(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets, Path dir,
+			String ficheroBin) {
 		int opcion;
 		// Soy consciente de que se repite código en los menús de administrador y
 		// usuario
@@ -281,56 +291,15 @@ public class Main {
 			sc.nextLine();
 
 			switch (opcion) {
-			case 1: {
-				cli.forEach(System.out::println);
-				break;
-			}
-			case 2: {
-				System.out.println("Introduce los datos del usuario");
-				cli.add(new Cliente(sc.nextLine(), sc.nextLine(), sc.nextLine()));
-				break;
-			}
-			case 3: {
-				System.out.println("Introduce el id del usuario que quieras eliminar");
-				String id = sc.nextLine();
-				for (Cliente c : cli) {
-					if (c.getNumCliente().equals(c.getNumCliente()))
-						cli.remove(c);
-				}
-				break;
-			}
-			case 4: {
-				System.out.println("Introduce el nombre del cliente cuyos datos quieres visualizar");
-				String n = sc.nextLine();
-				for (Cliente c : cli) {
-					if (c.getNumCliente().equals(c.getNombre()))
-						System.out.println(c);
-				}
-				break;
-			}
-			case 5: {
-				gas.forEach(System.out::println);
-				break;
-			}
-			case 6: {
-				Collections.sort(gas, Comparator.comparing(g -> g.getUbicacion()));
-				gas.forEach(System.out::println);
-				break;
-			}
-			case 7: {
-				Collections.sort(gas, Comparator.comparingDouble(g -> g.getPrecio95()));
-				gas.forEach(System.out::println);
-				break;
-			}
-			case 8: {
-				System.out.println("Introduce los datos de la nueva gasolinera");
-				gas.add(new Gasolinera(sc.nextLine(), sc.nextLine(), sc.nextDouble(), sc.nextDouble(), sc.nextDouble(),
-						sc.nextDouble()));
-				break;
-			}
-			case 9: {
-				menuGasolinera(null, null, null, gas);
-			}
+			case 1 -> mostrarClientes(cli);
+			case 2 -> cli = agregarCliente(cli, tickets, dir);
+			case 3 -> eliminarCliente(cli, tickets);
+			case 4 -> visualizarCliente(cli);
+			case 5 -> mostrarGasolineras(gas);
+			case 6 -> filtrarGasolUbicacion(gas);
+			case 7 -> filtrarGasPorPrecio(gas);
+			case 8 -> agregarGasolinera(gas, ficheroBin);
+			case 9 -> realizarVenta(cli, gas, tickets);
 			case 10: {
 				estadisticas(cli, tickets);
 				break;
@@ -344,6 +313,108 @@ public class Main {
 			}
 			}
 		} while (opcion != 11);
+	}
+
+	private static void realizarVenta(ArrayList<Cliente> cli, ArrayList<Gasolinera> gas, Path tickets) throws IOException {
+		System.out.println("Introduce el número del usuario que quieres que realice la venta");
+		String num = sc.nextLine();
+		Cliente aux = null;
+		for (Cliente c : cli) {
+			if (num.equals(c.getNumCliente())) {
+				aux = c;
+			}
+		}
+		System.out.println("Introduce el nombre de la gasolinera en la que se realizará la compra");
+		String nombre = sc.nextLine();
+		for (Gasolinera g : gas) {
+			if (num.equals(g.getNombre())) {
+				// lo hago solo para la gasolina, sería igual para el diesel pero habría que
+				// controlar cuando quieres una y cuando otra
+				System.out.println("Introduce los litros de gasolina que quieres comprar");
+				double litros = sc.nextDouble();
+				double coste = litros * g.getPrecio95();
+				crearTicket(aux, g, litros);
+			}
+		}
+
+	}
+
+	private static ArrayList<Gasolinera> agregarGasolinera(ArrayList<Gasolinera> gas, String ficheroBin)
+			throws FileNotFoundException, IOException {
+		System.out.println("Introduce el nombre de la nueva gasolinera");
+		String nombre = sc.nextLine();
+		System.out.println("Introduce la ubicación de la nueva gasolinera");
+		String ubicacion = sc.nextLine();
+		System.out.println("Introduce la cantidad de litros de gasolina");
+		double litros95 = sc.nextDouble();
+		System.out.println("Introduce la cantidad de litros de diésel");
+		double litrosDiesel = sc.nextDouble();
+		System.out.println("Introduce el precio de la gasolina");
+		double precio95 = sc.nextDouble();
+		System.out.println("Introduce el precio del diésel");
+		double precioDiesel = sc.nextDouble();
+		Gasolinera g = new Gasolinera(nombre, ubicacion, litros95, litrosDiesel, precio95, precioDiesel);
+		gas.add(g);
+		escribirGasolinera(g, ficheroBin);
+
+		return gas;
+	}
+
+	private static void escribirGasolinera(Gasolinera g, String ficheroBin) throws FileNotFoundException, IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ficheroBin));
+		oos.writeObject(g);
+	}
+
+	private static void filtrarGasPorPrecio(ArrayList<Gasolinera> gas) {
+		Collections.sort(gas, Comparator.comparingDouble(g -> g.getPrecio95()));
+		gas.forEach(System.out::println);
+	}
+
+	private static void mostrarGasolineras(ArrayList<Gasolinera> gas) {
+		gas.forEach(System.out::println);
+	}
+
+	private static void visualizarCliente(ArrayList<Cliente> cli) {
+		System.out.println("Introduce el nombre del cliente cuyos datos quieres visualizar");
+		String n = sc.nextLine();
+		for (Cliente c : cli) {
+			if (c.getNumCliente().equals(c.getNombre()))
+				System.out.println(c);
+		}
+	}
+
+	private static ArrayList<Cliente> eliminarCliente(ArrayList<Cliente> cli, Path tickets) {
+		System.out.println("Introduce el id del usuario que quieras eliminar");
+		String id = sc.nextLine();
+		for (Cliente c : cli) {
+			if (c.getNumCliente().equals(c.getNumCliente()))
+				cli.remove(c);
+		}
+		// No contemplo eliminar su fichero porque no queremos pérdida de datos, aunque
+		// supongo que es decisión de implementación
+		return cli;
+	}
+
+	private static ArrayList<Cliente> agregarCliente(ArrayList<Cliente> cli, Path tickets, Path dir)
+			throws IOException {
+		System.out.println("Introduce el número del usuario");
+		String num = sc.nextLine();
+		System.out.println("Introduce su nombre");
+		String nombre = sc.nextLine();
+		System.out.println("Introduce su dirección completa");
+		String direccion = sc.nextLine();
+		cli.add(new Cliente(sc.nextLine(), sc.nextLine(), sc.nextLine()));
+		escribirCliente(num, nombre, direccion, tickets);
+		return cli;
+	}
+
+	private static void mostrarClientes(ArrayList<Cliente> cli) {
+		cli.forEach(System.out::println);
+	}
+
+	private static void filtrarGasolUbicacion(ArrayList<Gasolinera> gas) {
+		Collections.sort(gas, Comparator.comparing(g -> g.getUbicacion()));
+		gas.forEach(System.out::println);
 	}
 
 	private static void estadisticas(ArrayList<Cliente> cli, Path tickets) {
@@ -360,11 +431,11 @@ public class Main {
 		try {
 			crearDirectorio(dir);
 			crearDirectorio(tickets);
-			listaClientes = cargarEmpleados(ruta, dir);
+			listaClientes = cargarClientes(ruta, dir);
 			listaGasolineras = leerGasolinera(ficheroBin);
 			menu(listaClientes, listaGasolineras, tickets);
-			login(listaClientes, listaGasolineras, tickets);
-		} catch (ParserConfigurationException | IOException | SAXException| ClassNotFoundException
+			login(listaClientes, listaGasolineras, tickets, dir, ficheroBin);
+		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException
 				| InvalidPathException e) {
 			e.printStackTrace();
 		}
