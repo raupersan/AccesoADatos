@@ -70,7 +70,7 @@ public class Gasolinera implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Tienes: " + getLitrosDiesel()+ "l de diesel";
+		return "Tienes: " + getLitrosDiesel()+ "l de diesel y el resto te lo imaginas";
 	}
 	 
 }

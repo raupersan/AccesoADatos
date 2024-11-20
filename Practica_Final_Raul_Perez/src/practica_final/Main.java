@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.*;
 import java.io.ByteArrayInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
@@ -59,7 +60,7 @@ public class Main {
 	}
 
 	private static ArrayList<Gasolinera> leerGasolinera(String ruta)
-			throws IOException, ClassNotFoundException, StreamCorruptedException {
+			throws IOException, ClassNotFoundException, StreamCorruptedException,EOFException {
 		ArrayList<Gasolinera> gasolineras = null;
 		Path path = Paths.get("gasolinera.bin");
 
