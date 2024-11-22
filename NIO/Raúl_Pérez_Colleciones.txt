@@ -1,0 +1,59 @@
+enum class Genre{
+    ADVENTURE,
+    ACTION,
+    PUZZLE,
+    SPORTS
+}
+
+data class VideoGame(
+    val title: String,
+    val genre: Genre,
+    val multiplayer: Boolean,
+    val price: Double
+)
+fun VideoGame.dentroPresupuesto(): Boolean {
+    return this.price > 0
+}
+fun main(){
+    val presupuesto = 30
+    
+    val games = listOf(
+    VideoGame(title = "Minecraft", genre = Genre.ADVENTURE, multiplayer = true, price = 25.0),
+    VideoGame(title = "Call of Duty", genre = Genre.ACTION, multiplayer = true, price = 60.0),
+    VideoGame(title = "Stardew Valley", genre = Genre.PUZZLE, multiplayer = false, price = 15.0),
+    VideoGame(title = "Tetris", genre = Genre.PUZZLE, multiplayer = false, price = 10.0),
+    VideoGame(title = "FIFA 23", genre = Genre.SPORTS, multiplayer = true, price = 55.0),
+    VideoGame(title = "The Last of Us", genre = Genre.ACTION, multiplayer = false, price = 60.0)
+)
+    val agruparPorGenero = games.groupBy { it.genre }
+    println("Juegos por género:")
+     agruparPorGenero.forEach { (genero, cantidad) ->
+        println("$genero : ${cantidad.size} juegos")
+    }
+    println()
+    val esMulti = games.filter { it.multiplayer }
+    println("Juegos multijugador:")
+    esMulti.forEach { VideoGame ->
+        println("- $games.name")
+    }
+    println()
+    val enPresupuesto = games.filter { it.dentroPresupuesto() }
+    println("Juegos dentro de tu presupuesto ($presupuesto):")
+    enPresupuesto.forEach { juego ->
+        println("- ${juego} (Stock: ${juego.price})")
+    }
+    println()
+    val porNombre = games.sortedBy { it.title }
+    println("Juegos ordenados por nombre:")
+    porNombre.forEach { juegos ->
+        println("- ${juegos.title}")
+    }
+    println()
+    val ordenadosPorPrecio = games.sortedWith(compareBy{it.price})
+    val barato = ordenadosPorPrecio.first()
+    mostExpensiveBook.let { book ->
+		println("El juego más barato es: $barato.name")
+        println("${book.title} por ${book.author} - Categoría: ${book.category} - Precio: $${book.price}")
+    }
+    
+}

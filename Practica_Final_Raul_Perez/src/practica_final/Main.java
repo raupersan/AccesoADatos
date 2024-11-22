@@ -84,7 +84,6 @@ public class Main {
 	private static void menu(ArrayList<Cliente> listaClientes, ArrayList<Gasolinera> listaGasolineras, Path tickets) {
 		String usuario;
 		String direccion = null;
-		Gasolinera gas = null;
 		Cliente cli = null;
 		System.out.println("Introduce tu número de usuario");
 		usuario = sc.nextLine();
@@ -138,11 +137,12 @@ public class Main {
 			String nombre = sc.nextLine();
 			for (Gasolinera gasolinera : listaGasolineras) {
 				if (gasolinera.getNombre() == nombre) {
-					gas = gasolinera;
+					Gasolinera gas =  gasolinera;
+					menuGasolinera(gas, cli, tickets, listaGasolineras);
 				}
 			}
 		}
-		menuGasolinera(gas, cli, tickets, listaGasolineras);
+		
 	}
 
 	private static void menuGasolinera(Gasolinera gasolinera, Cliente cli, Path tickets,
@@ -318,14 +318,15 @@ public class Main {
 		double precioDiesel = sc.nextDouble();
 		Gasolinera g = new Gasolinera(nombre, ubicacion, litros95, litrosDiesel, precio95, precioDiesel);
 		gas.add(g);
-		escribirGasolinera(g, ficheroBin);
+
+		escribirGasolinera(gas, g, ficheroBin);
 
 		return gas;
 	}
 
-	private static void escribirGasolinera(Gasolinera g, String ficheroBin) throws FileNotFoundException, IOException {
+	private static void escribirGasolinera(ArrayList<Gasolinera> gas, Gasolinera g, String ficheroBin) throws FileNotFoundException, IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ficheroBin));
-		oos.writeObject(g);
+		oos.writeObject(gas);
 	}
 
 	private static void filtrarGasPorPrecio(ArrayList<Gasolinera> gas) {
