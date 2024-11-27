@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 
 public class Menu {
-	private String URL = "jdbc:mysql://localhost:3306/Practica_Final";
+	private String URL = "jdbc:mysql://localhost:3306/PracticaFinal";
 	private String controlador = "com.mysql.cj.jdbc.Driver";
 
 	public Menu() {

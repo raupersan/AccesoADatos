@@ -393,7 +393,7 @@ public class Main {
 	public static void main(String[] args) {
 		String nombre="";
 	
-	/*	Path dir = Paths.get("Clientes");
+		Path dir = Paths.get("Clientes");
 		Path tickets = Paths.get("Tickets");
 		String ruta = "clientes.xml";
 		String ficheroBin = "gasolinera.bin";
@@ -410,7 +410,7 @@ public class Main {
 				| InvalidPathException e) {
 			e.printStackTrace();
 		}
-		*/
+		
 		menuSQL();
 	}
 
