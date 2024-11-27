@@ -197,6 +197,7 @@ public class Main {
 		String contra;
 		System.out.println("Introduce tu número de cliente");
 		num = sc.nextLine();
+		num = sc.nextLine();
 		System.out.println("Introduce tu contraseña");
 		contra = sc.nextLine();
 		if (num.equals("1"))
@@ -384,9 +385,15 @@ public class Main {
 	private static void estadisticas(ArrayList<Cliente> cli, Path tickets) {
 
 	}
-
+	private static void menuSQL() {
+		String usuario="root";
+		String password="cfgs";
+		System.out.println("Introduce tu usuario y contraseña");
+	}
 	public static void main(String[] args) {
-		Path dir = Paths.get("Clientes");
+		String nombre="";
+	
+	/*	Path dir = Paths.get("Clientes");
 		Path tickets = Paths.get("Tickets");
 		String ruta = "clientes.xml";
 		String ficheroBin = "gasolinera.bin";
@@ -397,11 +404,15 @@ public class Main {
 			crearDirectorio(tickets);
 			listaClientes = cargarClientes(ruta, dir);
 			listaGasolineras = leerGasolinera(ficheroBin);
-			menu(listaClientes, listaGasolineras, tickets);
-			login(listaClientes, listaGasolineras, tickets, dir, ficheroBin);
+		//	menu(listaClientes, listaGasolineras, tickets);
+		//login(listaClientes, listaGasolineras, tickets, dir, ficheroBin);
 		} catch (ParserConfigurationException | IOException | SAXException | ClassNotFoundException
 				| InvalidPathException e) {
 			e.printStackTrace();
 		}
+		*/
+		menuSQL();
 	}
+
+	
 }
