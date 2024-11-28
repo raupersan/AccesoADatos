@@ -1,0 +1,160 @@
+idProducto,Nombre,PrecioUnitario,Stock
+1,Coca-Cola,1.5,100
+2,Pepsi,1.4,200
+3,Fanta,1.6,150
+4,Sprite,1.5,250
+5,"Red Bull",2.5,50
+6,"Nestlé Pureza",0.9,300
+7,"Agua Evian",2,100
+8,"Cerveza Corona",1.2,120
+9,"Cerveza Heineken",1.5,80
+10,"Vodka Absolut",25,30
+11,"Whisky Johnnie Walker",40,20
+12,"Tequila Don Julio",50,25
+13,"Ron Bacardi",18,60
+14,Gatorade,1.8,180
+15,"Lipton Té Helado",1.3,200
+16,"Monster Energy",2,100
+17,"Hershey's Chocolate",2.5,250
+18,Snickers,1,300
+19,M&M's,1.2,200
+20,KitKat,1.1,400
+21,Twix,1.5,150
+22,"Chicles Orbit",0.5,500
+23,"Galletas Oreo",2,180
+24,Pringles,3,90
+25,Doritos,2.5,150
+26,Cheetos,1.8,200
+27,Lay's,1.5,250
+28,Ruffles,1.6,200
+29,"Papas Fritas Sabritas",1.2,300
+30,"Salsas Heinz",3.5,100
+31,"Ketchup Heinz",2,150
+32,"Mayonesa Hellmann's",2.5,120
+33,"Mostaza French's",1.8,180
+34,"Aceite de Oliva Bertolli",5,90
+35,"Aceite de Canola",3.5,150
+36,"Vinagre de Manzana",2,200
+37,"Sal de Mar",1,400
+38,"Arroz Basmati",4,80
+39,"Arroz Blanco",2.5,300
+40,"Pasta Barilla",3.5,100
+41,Macarrones,3,150
+42,"Spaghetti De Cecco",3.2,120
+43,"Harina de Trigo",1.5,250
+44,"Pan Bimbo",2,200
+45,"Pan de Molde Wonder",2.5,180
+46,"Leche Larga Vida",1.8,300
+47,"Leche Entera La La",1.5,250
+48,"Yogurt Griego",2,150
+49,"Mantequilla Lurpak",4,100
+50,"Margarina Flora",2.5,200
+51,"Queso Philadelphia",3.5,80
+52,"Queso Manchego",5,120
+53,"Queso Cheddar",3.2,150
+54,"Queso Mozzarella",3.5,130
+55,"Huevos San Juan",1.8,300
+56,"Pechuga de Pollo",6.5,50
+57,"Pechuga de Pavo",5,80
+58,Salchichón,4.5,100
+59,"Chorizo Ibérico",6,70
+60,Bacon,3.5,150
+61,"Filete de Res",8,60
+62,"Filete de Salmón",10,40
+63,"Atún en Lata",2,200
+64,"Sardinas en Lata",1.8,250
+65,Caviar,30,20
+66,Pistaches,3,200
+67,Almendras,4,150
+68,Nueces,3.5,180
+69,Muesli,2.5,220
+70,"Cereal Kellogg's Cornflakes",3,250
+71,"Cereal Cheerios",3.2,180
+72,"Cereal Special K",3.5,150
+73,"Galletas Digestive",2.2,300
+74,"Galletas María",1.5,250
+75,"Galletas Ricas",1.8,200
+76,"Galletas de Chocolate",2.5,150
+77,"Manteca de Cerdo",3,100
+78,"Aceite de Coco",4.5,80
+79,"Vinagre Balsámico",3.5,100
+80,"Salsa de Soja Kikkoman",3,150
+81,"Pimientos de Padrón",5,50
+82,Ajo,1,400
+83,Cebolla,1.2,300
+84,Tomate,2,250
+85,Pepino,1.8,200
+86,Lechuga,1.5,350
+87,Perejil,0.8,450
+88,Espárragos,3,120
+89,Espinaca,2.5,150
+90,Berenjena,2.2,180
+91,Zanahorias,1,400
+92,"Judías Verdes",2.2,100
+93,Brócoli,2.5,180
+94,Coliflor,2,160
+95,Champiñones,3,200
+96,Patatas,1.8,300
+97,Chirimoya,4,40
+98,Fresas,3.5,120
+99,Plátanos,2,180
+100,Manzanas,2.5,200
+101,Peras,2.2,150
+102,Uvas,3,100
+103,Kiwis,3,130
+104,Melocotones,3.2,100
+105,Cerezas,4.5,80
+106,Sandía,5,60
+107,Melón,4,70
+108,Piña,3.5,90
+109,Aguacates,3,200
+110,Limones,1.5,300
+111,Mandarinas,2,250
+112,Papaya,4,50
+113,Granada,3.5,120
+114,Frambuesas,5,60
+115,Mango,3.2,150
+116,Naranjas,1.8,300
+117,Coco,4,80
+118,"Frutas Congeladas",5,70
+119,"Té Verde",3,200
+120,"Café Illy",5,100
+121,"Café Nescafé",2.5,300
+122,"Chocolate Caliente Hershey's",2,250
+123,"Galletas Saladas",1.5,400
+124,"Pan Integral",2,150
+125,"Pan de Ajo",2.5,200
+126,"Pan de Molde",1.8,300
+127,"Pan de Pizza",3.5,100
+128,"Pasta de Pizza",1.8,150
+129,"Salsa Barbacoa",2,200
+130,"Salsa de Tomate",1.5,300
+131,"Salsa de Espaguetis",2,150
+132,Pesto,3.5,120
+133,"Queso Ricotta",4,90
+134,"Queso Parmesano",5,80
+135,"Queso Suizo",4.5,100
+136,"Queso Brie",6,50
+137,"Leche Condensada",3,150
+138,"Leche Evaporada",2.5,200
+139,"Crema Agria",2,180
+140,"Crema de Leche",2.5,120
+141,"Manteca de Cerdo",2.2,150
+142,"Crema de Coco",3.5,100
+143,"Fideos Instantáneos",0.5,300
+144,"Puré de Papas",2,150
+145,"Sopa en Lata",1.5,200
+146,"Sopa de Pollo",2,150
+147,"Sopa de Verduras",1.8,250
+148,"Sopa de Tomate",1.5,180
+149,"Sopa de Lentejas",2.5,100
+150,Minestrone,3,120
+151,"Lentejas Secas",2,180
+152,"Arroz Integral",3,120
+153,Quinoa,5,80
+154,Garbanzos,2.5,200
+155,"Frijoles Negros",1.8,300
+156,"Frijoles Blancos",2,150
+157,"Alubias Rojas",2.5,100
+158,"Maíz en Lata",2,200
+159,"Pechuga de Pavo",6,80
