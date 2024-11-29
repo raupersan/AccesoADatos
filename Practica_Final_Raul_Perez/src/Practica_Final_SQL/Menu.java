@@ -239,7 +239,7 @@ public class Menu {
 		System.out.println("¿Qué quieres hacer?");
 		System.out.println("a. Visualizar productos");
 		System.out.println("b. Realizar ventas para un cliente");
-		System.out.println("c. Cliente");
+		System.out.println("c. Ver tickets generados por un cliente");
 		char opcion = sc.next().charAt(0);
 		switch (opcion) {
 		case 'a': {
