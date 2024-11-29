@@ -244,9 +244,9 @@ public class Menu {
 		switch (opcion) {
 		case 'a': {
 			System.out.println("¿Cómo quieres visualizar los productos?");
-			System.out.println("i.     Por inicial");
-			System.out.println("ii.    Por precio");
-			System.out.println("iii.   Por stock");
+			System.out.println("i.    Por inicial");
+			System.out.println("ii.   Por precio");
+			System.out.println("iii.  Por stock");
 			opcion2 = sc.nextLine();
 			opcion2 = sc.nextLine();
 			switch (opcion2) {
@@ -273,9 +273,23 @@ public class Menu {
 			break;
 		}
 		case 'b': {
-			System.out.println("Introduce el código del cliente");
-			String cod = sc.nextLine();
-			cod = sc.nextLine();
+			int sino;
+			do {
+				System.out.println("Introduce el código del cliente");
+				String cod = sc.nextLine();
+				cod = sc.nextLine();
+				mostrarClientes();
+				System.out.println("Estás seguro de que quieres usar el cliente " + cod);
+				System.out.println("1. si");
+				System.out.println("2. no");
+				sino = sc.nextInt();
+			} while (sino == 2);
+			System.out.println("Introduce el nombre del producto");
+			String nombre = sc.nextLine();
+			System.out.println("Introduce la cantidad de producto");
+			int stock = sc.nextInt();
+			// TODO
+
 			break;
 		}
 		case 'c': {
@@ -309,6 +323,44 @@ public class Menu {
 	}
 
 	public void cliente() {
+		char opcion;
+		String opcion2;
+		System.out.println("¿Qué quieres hacer?");
+		System.out.println("a. Mostrar productos");
+		System.out.println("b. Realizar compras de productos");
+		System.out.println("c. Ver historial de compras");
+		System.out.println("d. Canjear puntos");
+		opcion = sc.next().charAt(0);
+		switch (opcion) {
+		case 'a': {
+			mostrarProductos();
+			break;
+		}
+		case 'b': {
+			// TODO
+			break;
+		}
+		case 'c': {
+			verHistorialCompras();
+			break;
+		}
+		case 'd': {
+			canjearPuntos();
+			break;
+		}
+		default:
+			throw new IllegalArgumentException("Opción no contemplada: " + opcion);
+		}
+	}
+
+	private void canjearPuntos() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void verHistorialCompras() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
