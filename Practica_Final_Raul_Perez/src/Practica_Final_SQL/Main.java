@@ -34,7 +34,6 @@ public class Main {
 			Connection conexion =  DriverManager.getConnection(URL,"root","cfgs");
 		if(conexion!=null) {
 			PreparedStatement sentencia = conexion.prepareStatement(consulta);
-			//sentencia.setString(1,nombre);
 
 			ResultSet rs = sentencia.executeQuery();
 
