@@ -12,7 +12,56 @@ public class Menu {
 	}
 
 	public void admin() {
-
+		char opcion;
+		String opcion2;
+		System.out.println("¿Qué quieres hacer?");
+		System.out.println("a. Insertar/modificar/eliminar clientes.");
+		System.out.println("a. Insertar/modificar/eliminar empleados.");
+		System.out.println("a. Insertar/modificar/eliminar productos.");
+		opcion=sc.next().charAt(0);
+		switch (opcion) {
+		case 'a': {
+			System.out.println("¿Que quieres hacer?");
+			System.out.println("i.   Insertar");
+			System.out.println("ii.  Modificar");
+			System.out.println("iii. Eliminar");
+			opcion2 = sc.nextLine();
+			opcion2 = sc.nextLine();
+			switch (opcion2) {
+			case "i": {
+				productoPorInicial();
+				break;
+			}
+			case "ii": {
+				System.out.println("¿Quieres verlo en orden ascendente o descendente?");
+				System.out.println("1. Asc");
+				System.out.println("2. Desc");
+				int opc3 = sc.nextInt();
+				if (opcion == 1)
+					productoPorPrecioAsc();
+				else
+					productoPorPrecioDesc();
+				break;
+			}
+			case "iii": {
+				productoPorStock();
+				break;
+			}
+			}
+		}
+		case 'b': {
+			System.out.println("Introduce el código del cliente");
+			String cod = sc.nextLine();
+			break;
+		}
+		case 'c':{
+			verTicketsEmpleado();
+			break;
+		}
+		default:
+			System.out.println();
+			break;
+		}
 	}
 
 	public void empleado() {
@@ -39,8 +88,8 @@ public class Menu {
 				System.out.println("¿Quieres verlo en orden ascendente o descendente?");
 				System.out.println("1. Asc");
 				System.out.println("2. Desc");
-				int opc3= sc.nextInt();
-				if (opcion==1)
+				int opc3 = sc.nextInt();
+				if (opcion == 1)
 					productoPorPrecioAsc();
 				else
 					productoPorPrecioDesc();
@@ -49,18 +98,26 @@ public class Menu {
 			case "iii": {
 				productoPorStock();
 				break;
-
 			}
 			}
 		}
 		case 'b': {
+			System.out.println("Introduce el código del cliente");
+			String cod = sc.nextLine();
 			break;
 		}
-		case 'c':
-			System.out.println();
+		case 'c':{
+			verTicketsEmpleado();
+			break;
+		}
 		default:
 			System.out.println();
+			break;
 		}
+	}
+
+	private void verTicketsEmpleado() {
+		ConexionSQLazo.conexion("*", "ticket", " having 	'PrecioUnitario'", 4);
 	}
 
 	private void productoPorPrecioDesc() {
