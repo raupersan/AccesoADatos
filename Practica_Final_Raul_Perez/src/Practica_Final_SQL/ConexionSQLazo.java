@@ -13,10 +13,10 @@ public class ConexionSQLazo {
 	public ConexionSQLazo() {
 	}
 
-	public static void conexion(String colum, String tabla, String extra, int numParam) {
+	public static void conexion(String accion, String colum, String tabla, String extra, int numParam) {
 		String URL = "jdbc:mysql://localhost:3306/PracticaFinal";
 		String controlador = "com.mysql.cj.jdbc.Driver";
-		String consulta = "select " + colum + " from " + tabla + " " + extra;
+		String consulta = accion+ " " + colum + " from " + tabla + " " + extra;
 		try {
 			Class.forName(controlador);
 			Connection conexion = DriverManager.getConnection(URL, "root", "cfgs");
@@ -36,7 +36,60 @@ public class ConexionSQLazo {
 			e.printStackTrace();
 		}
 	}
-
+	public static void añadir(String tabla, String valores) {
+		String URL = "jdbc:mysql://localhost:3306/PracticaFinal";
+		String controlador = "com.mysql.cj.jdbc.Driver";
+		String consulta = "insert into " + tabla + valores;
+		try {
+			Class.forName(controlador);
+			Connection conexion = DriverManager.getConnection(URL, "root", "cfgs");
+			if (conexion != null) {
+				PreparedStatement sentencia = conexion.prepareStatement(consulta);
+				ResultSet rs = sentencia.executeQuery();
+			
+			} else {
+				System.out.println("Ha habido un error de conexion");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void actualizar( String colum, String tabla, String condicion) {
+		String URL = "jdbc:mysql://localhost:3306/PracticaFinal";
+		String controlador = "com.mysql.cj.jdbc.Driver";
+		String consulta = "update" + colum  +" set " + tabla + condicion;
+		try {
+			Class.forName(controlador);
+			Connection conexion = DriverManager.getConnection(URL, "root", "cfgs");
+			if (conexion != null) {
+				PreparedStatement sentencia = conexion.prepareStatement(consulta);
+				ResultSet rs = sentencia.executeQuery();
+			
+			} else {
+				System.out.println("Ha habido un error de conexion");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void eliminar(String tabla, String condicion) {
+		String URL = "jdbc:mysql://localhost:3306/PracticaFinal";
+		String controlador = "com.mysql.cj.jdbc.Driver";
+		String consulta = "delete from " + tabla + " where "+condicion;
+		try {
+			Class.forName(controlador);
+			Connection conexion = DriverManager.getConnection(URL, "root", "cfgs");
+			if (conexion != null) {
+				PreparedStatement sentencia = conexion.prepareStatement(consulta);
+				ResultSet rs = sentencia.executeQuery();
+			
+			} else {
+				System.out.println("Ha habido un error de conexion");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public static rol sacarRol(String colum, String tabla, String extra, int numParam) {
 		String role = "";
 				
@@ -45,7 +98,7 @@ public class ConexionSQLazo {
 		String consulta = "select " + colum + " from " + tabla + " " + extra;
 		try {
 			Class.forName(controlador);
-			Connection conexion = DriverManager.getConnection(URL, "root", "cfgs");
+			Connection conexion = DriverManager.getConnection(URL, "root", "  ");
 			if (conexion != null) {
 				PreparedStatement sentencia = conexion.prepareStatement(consulta);
 				ResultSet rs = sentencia.executeQuery();

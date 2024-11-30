@@ -14,8 +14,6 @@ public class Main {
 	private static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		String URL = "jdbc:mysql://localhost:3306/PracticaFinal";
-		String controlador = "com.mysql.cj.jdbc.Driver";
 		Rol.rol rol;
 		System.out.println("Introduce tu usuario");
 		String nombre = sc.nextLine();

@@ -130,7 +130,7 @@ public class Menu {
 				int opc3 = sc.nextInt();
 				if (opcion == 1)
 					cambiarNombreProd(cod);
-				else if (opc3 == 2)
+				else if (opc3 == 2) {
 					cambiarPrecioProd(cod);
 				else
 					cambiarStockProd(cod);
@@ -150,90 +150,7 @@ public class Menu {
 			throw new IllegalArgumentException("Opción no contemplada: " + opcion);
 		}
 	}
-
-	private void eliminarProducto(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void mostrarProductos() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void eliminarEmpleado(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void mostrarEmpleados() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void cambiarStockProd(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void cambiarPrecioProd(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void cambiarNombreProd(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void insertarProducto(String nombre, double precio, int stock) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void cambiarPuesto(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void cambiarNombreEmpleado(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void insertarEmpleado(String nombre, String puesto) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void eliminarCliente(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void cambiarDirCliente(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void cambiarNombreCliente(String cod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void eliminarEmpleadp(String codigo) {
-		// TODO Auto-generated method stub
-	}
-
-	private void insertarCliente(String nombre, String direccion) {
-		// TODO Auto-generated method stub
-	}
-
-	private void mostrarClientes() {
-		ConexionSQLazo.conexion("*", "cliente", " ", 4);
-
-	}
-
+	
 	public void empleado() {
 		String opcion2;
 		System.out.println("¿Qué quieres hacer?");
@@ -302,26 +219,6 @@ public class Menu {
 		}
 	}
 
-	private void verTicketsEmpleado() {
-		ConexionSQLazo.conexion("*", "ticket", " having 	'PrecioUnitario'", 4);
-	}
-
-	private void productoPorPrecioDesc() {
-		ConexionSQLazo.conexion("*", "producto", "order by 'PrecioUnitario' desc", 4);
-	}
-
-	private void productoPorStock() {
-		ConexionSQLazo.conexion("*", "producto", "order by 'Stock'", 4);
-	}
-
-	private void productoPorPrecioAsc() {
-		ConexionSQLazo.conexion("*", "producto", "order by 'PrecioUnitario'", 4);
-	}
-
-	private void productoPorInicial() {
-		ConexionSQLazo.conexion("*", "producto", "order by 'Nombre'", 4);
-	}
-
 	public void cliente() {
 		char opcion;
 		String opcion2;
@@ -352,6 +249,113 @@ public class Menu {
 			throw new IllegalArgumentException("Opción no contemplada: " + opcion);
 		}
 	}
+
+	private void eliminarProducto(String cod) {
+		ConexionSQLazo.conexion("delete","", "producto", " where Nombre='" +cod+"'", 4);
+
+	}
+
+	private void mostrarProductos() {
+		ConexionSQLazo.conexion("select","*", "producto", " ", 4);
+
+	}
+
+	private void eliminarEmpleado(String cod) {
+		ConexionSQLazo.eliminar("empleado", " codigoEmpleado='" + cod +"'");
+
+	}
+
+	private void mostrarEmpleados() {
+		ConexionSQLazo.conexion("select","*", "empleado", " ", 5);
+
+	}
+
+	private void cambiarStockProd(String cod) {
+		System.out.println("Introduce la nueva cantidad de stock");
+		int stock = sc.nextInt();
+		ConexionSQLazo.actualizar("producto", "stock = " + stock, " where idProducto='"+cod+"'");
+	}
+
+	private void cambiarPrecioProd(String cod) {
+		System.out.println("Introduce el nuevo precio");
+		double precio = sc.nextDouble();
+		ConexionSQLazo.actualizar("producto", "PrecioUnitario = " + precio, " where idProducto='"+cod+"'");
+	}
+
+	private void cambiarNombreProd(String cod) {
+		System.out.println("Introduce el nuevo nombre del producto");
+		String nombre = sc.nextLine();
+		ConexionSQLazo.actualizar("producto", "Nombre = " + nombre, " where idProducto='"+cod+"'");
+	}
+
+	private void insertarProducto(String nombre, double precio, int stock) {
+		ConexionSQLazo.añadir("producto"," values("+15+", '"+nombre+"', "+ precio+","+stock+")");
+	}
+
+	private void cambiarPuesto(String cod) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void cambiarNombreEmpleado(String cod) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void insertarEmpleado(String nombre, String puesto) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void eliminarCliente(String cod) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void cambiarDirCliente(String cod) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void cambiarNombreCliente(String cod) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void eliminarEmpleadp(String codigo) {
+		// TODO Auto-generated method stub
+	}
+
+	private void insertarCliente(String nombre, String direccion) {
+		// TODO Auto-generated method stub
+	}
+
+	private void mostrarClientes() {
+		ConexionSQLazo.conexion("select","*", "cliente", " ", 4);
+
+	}
+
+	
+	private void verTicketsEmpleado() {
+		ConexionSQLazo.conexion("select","*", "ticket", " having 	'PrecioUnitario'", 4);
+	}
+
+	private void productoPorPrecioDesc() {
+		ConexionSQLazo.conexion("select","*", "producto", "order by 'PrecioUnitario' desc", 4);
+	}
+
+	private void productoPorStock() {
+		ConexionSQLazo.conexion("select","*", "producto", "order by 'Stock'", 4);
+	}
+
+	private void productoPorPrecioAsc() {
+		ConexionSQLazo.conexion("select","*", "producto", "order by 'PrecioUnitario'", 4);
+	}
+
+	private void productoPorInicial() {
+		ConexionSQLazo.conexion("select","*", "producto", "order by 'Nombre'", 4);
+	}
+
 
 	private void canjearPuntos() {
 		// TODO Auto-generated method stub
