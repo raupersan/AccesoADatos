@@ -293,41 +293,43 @@ public class Menu {
 	}
 
 	private void cambiarPuesto(String cod) {
-		// TODO Auto-generated method stub
-
+		System.out.println("¿Que rol quieres que tenga?");
+		String rol = sc.nextLine();
+		ConexionSQLazo.actualizar("empleado", "puesto='"+ rol + "' ", "where codigoEmpleado='"+cod+"'");
 	}
 
 	private void cambiarNombreEmpleado(String cod) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Introduce el nuevo nombre para el empleado");
+		String nombre = sc.nextLine();
+		ConexionSQLazo.actualizar("empleado", "Nombre='"+ nombre + "' ", "where codigoEmpleado='"+cod+"'");
 	}
 
 	private void insertarEmpleado(String nombre, String puesto) {
-		// TODO Auto-generated method stub
-
+		ConexionSQLazo.añadir("empleado", "values(51,"+ nombre+"," + puesto + ")");
 	}
 
 	private void eliminarCliente(String cod) {
-		// TODO Auto-generated method stub
-
+		ConexionSQLazo.eliminar("cliente", " codigoEmpleado='"+cod+"'");
 	}
 
 	private void cambiarDirCliente(String cod) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Indica la nueva dirección del cliente");
+		String direccion = sc.nextLine();
+		ConexionSQLazo.actualizar("cliente", " Direccion='"+direccion+"'", "where numerodecliente='"+cod+"'");
 	}
 
 	private void cambiarNombreCliente(String cod) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Escribe el nuevo nombre del cliente");
+		String nombre = sc.nextLine();
+		ConexionSQLazo.actualizar("cliente", "Nombre='"+ nombre + "' ", "where numerodecliente='"+cod+"'");
 	}
 
 	private void eliminarEmpleadp(String codigo) {
-		// TODO Auto-generated method stub
+		ConexionSQLazo.eliminar("empleado", " codigoEmpleado='"+codigo+"'");
 	}
 
 	private void insertarCliente(String nombre, String direccion) {
-		// TODO Auto-generated method stub
+		ConexionSQLazo.añadir("cliente", "values(51,"+ nombre+"," + direccion + ")");
 	}
 
 	private void mostrarClientes() {
