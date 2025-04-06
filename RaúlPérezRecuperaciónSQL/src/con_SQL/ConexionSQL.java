@@ -1,4 +1,4 @@
-package Practica_Final_SQL;
+package con_SQL;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,11 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import Practica_Final_SQL.Rol.rol;
 
-public class ConexionSQLazo {
+public class ConexionSQL {
 
-	public ConexionSQLazo() {
+	public ConexionSQL() {
 	}
 
 	public static void conexion(String accion, String colum, String tabla, String extra, int numParam) {
@@ -90,9 +89,9 @@ public class ConexionSQLazo {
 			e.printStackTrace();
 		}
 	}
-	public static rol sacarRol(String colum, String tabla, String extra, int numParam) {
-		String role = "";
-				
+	public static int sacarRol(String colum, String tabla, String extra, int numParam) {
+		int rol; 
+		
 		String URL = "jdbc:mysql://localhost:3306/PracticaFinal";
 		String controlador = "com.mysql.cj.jdbc.Driver";
 		String consulta = "select " + colum + " from " + tabla + " " + extra;
@@ -103,7 +102,7 @@ public class ConexionSQLazo {
 				PreparedStatement sentencia = conexion.prepareStatement(consulta);
 				ResultSet rs = sentencia.executeQuery();
 				while (rs.next()) {
-				role=rs.getString(numParam);
+				//role=rs.getString(numParam);
 				}
 			} else {
 				System.out.println("Ha habido un error de conexion");
@@ -112,8 +111,6 @@ public class ConexionSQLazo {
 			e.printStackTrace();
 		}
 				
-		Rol.rol rol = Rol.rol.valueOf(role);
-
-		return rol;
+		 return 1;
 	}
 }

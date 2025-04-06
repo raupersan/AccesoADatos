@@ -1,4 +1,4 @@
-package Practica_Final_SQL;
+package con_SQL;
 
 import java.util.Scanner;
 
@@ -24,6 +24,7 @@ public class Menu {
 			System.out.println("ii.  Modificar");
 			System.out.println("iii. Eliminar");
 
+			opcion2 = sc.nextLine();
 			opcion2 = sc.nextLine();
 
 			switch (opcion2) {
@@ -132,7 +133,7 @@ public class Menu {
 					cambiarNombreProd(cod);
 				else if (opc3 == 2) {
 					cambiarPrecioProd(cod);
-				else
+				} else
 					cambiarStockProd(cod);
 				break;
 			}
@@ -150,7 +151,7 @@ public class Menu {
 			throw new IllegalArgumentException("Opción no contemplada: " + opcion);
 		}
 	}
-	
+
 	public void empleado() {
 		String opcion2;
 		System.out.println("¿Qué quieres hacer?");
@@ -234,7 +235,6 @@ public class Menu {
 			break;
 		}
 		case 'b': {
-			// TODO
 			break;
 		}
 		case 'c': {
@@ -251,121 +251,117 @@ public class Menu {
 	}
 
 	private void eliminarProducto(String cod) {
-		ConexionSQLazo.conexion("delete","", "producto", " where Nombre='" +cod+"'", 4);
+		ConexionSQL.conexion("delete", "", "producto", " where Nombre='" + cod + "'", 4);
 
 	}
 
 	private void mostrarProductos() {
-		ConexionSQLazo.conexion("select","*", "producto", " ", 4);
+		ConexionSQL.conexion("select", "*", "producto", " ", 4);
 
 	}
 
 	private void eliminarEmpleado(String cod) {
-		ConexionSQLazo.eliminar("empleado", " codigoEmpleado='" + cod +"'");
+		ConexionSQL.eliminar("empleado", " codigoEmpleado='" + cod + "'");
 
 	}
 
 	private void mostrarEmpleados() {
-		ConexionSQLazo.conexion("select","*", "empleado", " ", 5);
+		ConexionSQL.conexion("select", "*", "empleado", " ", 5);
 
 	}
 
 	private void cambiarStockProd(String cod) {
 		System.out.println("Introduce la nueva cantidad de stock");
 		int stock = sc.nextInt();
-		ConexionSQLazo.actualizar("producto", "stock = " + stock, " where idProducto='"+cod+"'");
+		ConexionSQL.actualizar("producto", "stock = " + stock, " where idProducto='" + cod + "'");
 	}
 
 	private void cambiarPrecioProd(String cod) {
 		System.out.println("Introduce el nuevo precio");
 		double precio = sc.nextDouble();
-		ConexionSQLazo.actualizar("producto", "PrecioUnitario = " + precio, " where idProducto='"+cod+"'");
+		ConexionSQL.actualizar("producto", "PrecioUnitario = " + precio, " where idProducto='" + cod + "'");
 	}
 
 	private void cambiarNombreProd(String cod) {
 		System.out.println("Introduce el nuevo nombre del producto");
 		String nombre = sc.nextLine();
-		ConexionSQLazo.actualizar("producto", "Nombre = " + nombre, " where idProducto='"+cod+"'");
+		ConexionSQL.actualizar("producto", "Nombre = " + nombre, " where idProducto='" + cod + "'");
 	}
 
 	private void insertarProducto(String nombre, double precio, int stock) {
-		ConexionSQLazo.añadir("producto"," values("+15+", '"+nombre+"', "+ precio+","+stock+")");
+		ConexionSQL.añadir("producto", " values(" + 15 + ", '" + nombre + "', " + precio + "," + stock + ")");
 	}
 
 	private void cambiarPuesto(String cod) {
 		System.out.println("¿Que rol quieres que tenga?");
 		String rol = sc.nextLine();
-		ConexionSQLazo.actualizar("empleado", "puesto='"+ rol + "' ", "where codigoEmpleado='"+cod+"'");
+		ConexionSQL.actualizar("empleado", "puesto='" + rol + "' ", "where codigoEmpleado='" + cod + "'");
 	}
 
 	private void cambiarNombreEmpleado(String cod) {
 		System.out.println("Introduce el nuevo nombre para el empleado");
 		String nombre = sc.nextLine();
-		ConexionSQLazo.actualizar("empleado", "Nombre='"+ nombre + "' ", "where codigoEmpleado='"+cod+"'");
+		ConexionSQL.actualizar("empleado", "Nombre='" + nombre + "' ", "where codigoEmpleado='" + cod + "'");
 	}
 
 	private void insertarEmpleado(String nombre, String puesto) {
-		ConexionSQLazo.añadir("empleado", "values(51,"+ nombre+"," + puesto + ")");
+		ConexionSQL.añadir("empleado", "values(51," + nombre + "," + puesto + ")");
 	}
 
 	private void eliminarCliente(String cod) {
-		ConexionSQLazo.eliminar("cliente", " codigoEmpleado='"+cod+"'");
+		ConexionSQL.eliminar("cliente", " codigoEmpleado='" + cod + "'");
 	}
 
 	private void cambiarDirCliente(String cod) {
 		System.out.println("Indica la nueva dirección del cliente");
 		String direccion = sc.nextLine();
-		ConexionSQLazo.actualizar("cliente", " Direccion='"+direccion+"'", "where numerodecliente='"+cod+"'");
+		ConexionSQL.actualizar("cliente", " Direccion='" + direccion + "'", "where numerodecliente='" + cod + "'");
 	}
 
 	private void cambiarNombreCliente(String cod) {
 		System.out.println("Escribe el nuevo nombre del cliente");
 		String nombre = sc.nextLine();
-		ConexionSQLazo.actualizar("cliente", "Nombre='"+ nombre + "' ", "where numerodecliente='"+cod+"'");
+		ConexionSQL.actualizar("cliente", "Nombre='" + nombre + "' ", "where numerodecliente='" + cod + "'");
 	}
 
 	private void eliminarEmpleadp(String codigo) {
-		ConexionSQLazo.eliminar("empleado", " codigoEmpleado='"+codigo+"'");
+		ConexionSQL.eliminar("empleado", " codigoEmpleado='" + codigo + "'");
 	}
 
 	private void insertarCliente(String nombre, String direccion) {
-		ConexionSQLazo.añadir("cliente", "values(51,"+ nombre+"," + direccion + ")");
+		ConexionSQL.añadir("cliente", "values(51," + nombre + "," + direccion + ")");
 	}
 
 	private void mostrarClientes() {
-		ConexionSQLazo.conexion("select","*", "cliente", " ", 4);
+		ConexionSQL.conexion("select", "*", "cliente", " ", 4);
 
 	}
 
-	
 	private void verTicketsEmpleado() {
-		ConexionSQLazo.conexion("select","*", "ticket", " having 	'PrecioUnitario'", 4);
+		ConexionSQL.conexion("select", "*", "ticket", " having 	'PrecioUnitario'", 4);
 	}
 
 	private void productoPorPrecioDesc() {
-		ConexionSQLazo.conexion("select","*", "producto", "order by 'PrecioUnitario' desc", 4);
+		ConexionSQL.conexion("select", "*", "producto", "order by 'PrecioUnitario' desc", 4);
 	}
 
 	private void productoPorStock() {
-		ConexionSQLazo.conexion("select","*", "producto", "order by 'Stock'", 4);
+		ConexionSQL.conexion("select", "*", "producto", "order by 'Stock'", 4);
 	}
 
 	private void productoPorPrecioAsc() {
-		ConexionSQLazo.conexion("select","*", "producto", "order by 'PrecioUnitario'", 4);
+		ConexionSQL.conexion("select", "*", "producto", "order by 'PrecioUnitario'", 4);
 	}
 
 	private void productoPorInicial() {
-		ConexionSQLazo.conexion("select","*", "producto", "order by 'Nombre'", 4);
+		ConexionSQL.conexion("select", "*", "producto", "order by 'Nombre'", 4);
 	}
 
-
 	private void canjearPuntos() {
-		// TODO Auto-generated method stub
 
 	}
 
 	private void verHistorialCompras() {
-		// TODO Auto-generated method stub
 
 	}
 
