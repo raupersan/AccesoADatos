@@ -14,6 +14,13 @@ public class Cliente {
 		this.activo = activo;
 	}
 
+	public Cliente(String numero, String nombre, String direccion) {
+		super();
+		this.numero = numero;
+		this.nombre = nombre;
+		this.direccion = direccion;
+	}
+
 	public String getNumero() {
 		return numero;
 	}

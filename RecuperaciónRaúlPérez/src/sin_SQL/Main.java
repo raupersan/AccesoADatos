@@ -10,7 +10,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		Fichero fichero = new Fichero();
-		fichero.leerXML();
+		crearCarpetasBase();
+		fichero.leerFicheros();
 		mostrarMenuPrincipal();
 	}
 
@@ -26,11 +27,11 @@ public class Main {
 
 	private static void mostrarMenuPrincipal() {
 		int opcion;
-		do {
-			System.out.println("1. Modo Administrador");
-			System.out.println("2. Modo Usuario");
+		do {		
+			System.out.print("Selecciona una opción: \n");
+			System.out.println("1. Menú Administrador");
+			System.out.println("2. Menú Usuario");
 			System.out.println("3. Salir");
-			System.out.print("Seleccione una opción: ");
 			opcion = sc.nextInt();
 			sc.nextLine();
 
