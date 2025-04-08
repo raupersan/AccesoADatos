@@ -26,30 +26,24 @@ public class Fichero {
 		}
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(xml);
-            document.getDocumentElement().normalize();
-
-            NodeList listaClientes = document.getElementsByTagName("cliente");
-
-            for (int i = 0; i < listaClientes.getLength(); i++) {
-                Node nodo = listaClientes.item(i);
-                if (nodo.getNodeType() == Node.ELEMENT_NODE) {
-                    Element elemento = (Element) nodo;
-
-                    String numero = elemento.getElementsByTagName("numerodecliente").item(0).getTextContent();
-                    String nombre = elemento.getElementsByTagName("Nombre").item(0).getTextContent();
-
-                    Element direccionEl = (Element) elemento.getElementsByTagName("Direccion").item(0);
-                    String calle = direccionEl.getElementsByTagName("Calle").item(0).getTextContent();
-                    String ciudad = direccionEl.getElementsByTagName("Ciudad").item(0).getTextContent();
-                    String codigoPostal = direccionEl.getElementsByTagName("Codigo_Postal").item(0).getTextContent();
-                    String pais = direccionEl.getElementsByTagName("Pais").item(0).getTextContent();
-
-                    String direccionCompleta = calle + ", " + ciudad + ", " + codigoPostal + ", " + pais;
-
-                    Cliente cliente = new Cliente(numero, nombre, direccionCompleta);
-                    guardarClienteEnFichero(cliente);
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document document = builder.parse(xml);
+			document.getDocumentElement().normalize();
+			NodeList listaClientes = document.getElementsByTagName("cliente");
+			for (int i = 0; i < listaClientes.getLength(); i++) {
+				Node nodo = listaClientes.item(i);
+				if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+					Element elemento = (Element) nodo;
+					String numero = elemento.getElementsByTagName("numerodecliente").item(0).getTextContent();
+					String nombre = elemento.getElementsByTagName("Nombre").item(0).getTextContent();
+					Element direccionEl = (Element) elemento.getElementsByTagName("Direccion").item(0);
+					String calle = direccionEl.getElementsByTagName("Calle").item(0).getTextContent();
+					String ciudad = direccionEl.getElementsByTagName("Ciudad").item(0).getTextContent();
+					String codigoPostal = direccionEl.getElementsByTagName("Codigo_Postal").item(0).getTextContent();
+					String pais = direccionEl.getElementsByTagName("Pais").item(0).getTextContent();
+					String direccionCompleta = calle + ", " + ciudad + ", " + codigoPostal + ", " + pais;
+					Cliente cliente = new Cliente(numero, nombre, direccionCompleta);
+					guardarClienteEnFichero(cliente);
 				}
 			}
 

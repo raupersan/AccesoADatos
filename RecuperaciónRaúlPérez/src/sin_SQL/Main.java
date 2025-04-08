@@ -28,7 +28,7 @@ public class Main {
 	private static void mostrarMenuPrincipal() {
 		int opcion;
 		do {		
-			System.out.print("Selecciona una opción: \n");
+			System.out.println("Selecciona una opción: ");
 			System.out.println("1. Menú Administrador");
 			System.out.println("2. Menú Usuario");
 			System.out.println("3. Salir");
@@ -45,8 +45,21 @@ public class Main {
 	}
 
 	private static void menuAdministrador() {
-		// TODO: Implementar menú del administrador
-		System.out.println("[ADMIN] Menú del Administrador (en desarrollo)");
+		int opcion;
+		do {
+			System.out.println("¿Qué quieres hacer?");
+			System.out.println("1. Ver todos los datos de los clientes");
+			System.out.println("2. Añadir clientes");
+			System.out.println("3. Eliminar clientes");
+			System.out.println("4. Visualizar los datos de un cliente");
+			System.out.println("5 Visualizar los datos de las gasolineras");
+			System.out.println("6. Visualizar los datos de las gasolineras según su ubicación");
+			System.out.println("7. Mostrar las gasolineras según los precios de las gasolinas");
+			System.out.println("8. Añadir gasolineras");
+			System.out.println("9. Realizar ventas generando tickets");
+			System.out.println("10. Mostrar estadísiticas de todos los clientes");
+			
+		} while (opcion != 10);
 	}
 
 	private static void menuUsuario() {
