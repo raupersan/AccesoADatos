@@ -53,4 +53,9 @@ public class Cliente {
 		this.activo = activo;
 	}
 
+	@Override
+	public String toString() {
+		return "Cliente:" + numero + ", nombre=" + nombre + ", direccion=" + direccion + ", activo=" + activo;
+	}
+
 }

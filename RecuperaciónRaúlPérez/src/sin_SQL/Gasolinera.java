@@ -1,6 +1,8 @@
 package sin_SQL;
 
-public class Gasolinera {
+import java.io.Serializable;
+
+public class Gasolinera implements Serializable {
 	private String nombre;
 	private String ubicacion;
 	private double litros95;
@@ -65,6 +67,12 @@ public class Gasolinera {
 
 	public void setPrecioDiesel(double precioDiesel) {
 		this.precioDiesel = precioDiesel;
+	}
+
+	@Override
+	public String toString() {
+		return "Gasolinera " + nombre + ", ubicacion=" + ubicacion + ", litros95=" + litros95 + ", litrosDiesel="
+				+ litrosDiesel + ", precio95=" + precio95 + ", precioDiesel=" + precioDiesel;
 	}
 
 }

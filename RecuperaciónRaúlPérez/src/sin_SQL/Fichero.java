@@ -16,6 +16,17 @@ public class Fichero {
 		String ruta = "clientes.xml";
 		String ficheroBin = "gasoliera.bin";
 		leerXML(ruta);
+		Gasolinera[] gasolineras = cargarGasolineras();
+
+	}
+
+	public Gasolinera[] cargarGasolineras() {
+		try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Path.of("gasolinera.bin")))) {
+			return (Gasolinera[]) ois.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			System.out.println("Error al leer gasolineras: " + e.getMessage());
+			return new Gasolinera[0]; 
+		}
 	}
 
 	public void leerXML(String ruta) {
@@ -55,7 +66,7 @@ public class Fichero {
 
 	}
 
-	private void guardarClienteEnFichero(Cliente cliente) {
+	public static void guardarClienteEnFichero(Cliente cliente) {
 		try {
 			Path ruta = Path.of("clientes", cliente.getNumero() + ".txt");
 			Files.writeString(ruta, cliente.toString());

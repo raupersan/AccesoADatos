@@ -1,1 +1,1 @@
-sin_SQL.Cliente@1efed156
+Cliente:12345, nombre=Luis García, direccion=Calle de la princesa, Madrid, 28020, España, activo=true
