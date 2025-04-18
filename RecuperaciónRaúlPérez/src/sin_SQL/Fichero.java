@@ -5,27 +5,46 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
 import java.io.*;
 import java.nio.file.*;
+import java.util.Arrays;
 
 public class Fichero {
+	private final String ubicacionGasolineras = "gasolineras.bin";
+	private final String ubicacionClientes = "clientes.xml";
 
 	public Fichero() {
 
 	}
 
 	public void leerFicheros() {
-		String ruta = "clientes.xml";
-		String ficheroBin = "gasoliera.bin";
-		leerXML(ruta);
+		leerXML(ubicacionClientes);
 		Gasolinera[] gasolineras = cargarGasolineras();
 
 	}
 
 	public Gasolinera[] cargarGasolineras() {
-		try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Path.of("gasolinera.bin")))) {
+		try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Path.of(ubicacionGasolineras)))) {
 			return (Gasolinera[]) ois.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("Error al leer gasolineras: " + e.getMessage());
-			return new Gasolinera[0]; 
+			return new Gasolinera[0];
+		}
+	}
+
+	public void agregarGasolinera(Gasolinera nueva) {
+		try {
+			Gasolinera[] existentes = cargarGasolineras();
+
+			Gasolinera[] actualizadas = Arrays.copyOf(existentes, existentes.length + 1);
+			actualizadas[existentes.length] = nueva;
+
+			try (ObjectOutputStream oos = new ObjectOutputStream(
+					Files.newOutputStream(Path.of(ubicacionGasolineras)))) {
+				oos.writeObject(actualizadas);
+				System.out.println("Gasolinera añadida correctamente.");
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al agregar gasolinera: " + e.getMessage());
 		}
 	}
 

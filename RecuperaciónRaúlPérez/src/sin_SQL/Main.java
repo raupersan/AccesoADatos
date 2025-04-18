@@ -72,14 +72,62 @@ public class Main {
 			case 5 -> mostrarGasolineras();
 			case 6 -> mostrarPorUbicacion();
 			case 7 -> mostrarPorPrecio();
-			// case 8 -> agregarGasolinera();
-			// case 9 -> realizarVenta();
+			case 8 -> agregarGasolinera();
+			case 9 -> realizarVenta();
 			// case 10 -> mostrarEstadisticas();
 			case 11 -> System.out.println("Saliendo del menú de administrador...");
 			default -> System.out.println("Opción inválida");
 			}
 
 		} while (opcion != 11);
+	}
+	private static void menuUsuario() {
+		int opcion;
+		do {
+			System.out.println("¿Qué quieres hacer?");
+			System.out.println("1. Ver mis datos");
+			System.out.println("2. Visualizar los datos de las gasolineras");
+			System.out.println("3. Visualizar los datos de las gasolineras según su ubicación");
+			System.out.println("4. Mostrar las gasolineras según los precios de las gasolinas");
+			System.out.println("5. Realizar ventas generando tickets");
+			System.out.println("10. Realizar informe del dinero invertido");
+			System.out.println("7. Salir");
+			opcion = sc.nextInt();
+			switch (opcion) {
+			case 1 -> mostrarClientes();
+			case 4 -> mostrarUnCliente();
+			case 5 -> mostrarGasolineras();
+			case 6 -> mostrarPorUbicacion();
+			case 7 -> mostrarPorPrecio();
+			case 8 -> agregarGasolinera();
+			case 9 -> realizarVenta();
+			// case 10 -> mostrarEstadisticas();
+			case 11 -> System.out.println("Saliendo del menú de administrador...");
+			default -> System.out.println("Opción inválida");
+			}
+	}while (opcion !=7);
+}
+	private static void realizarVenta() {
+		// TODO Auto-generated method stub
+	}
+
+	private static void agregarGasolinera() {
+		System.out.println("Introduce el nombre de la gasolinera");
+		sc.nextLine();
+		String nombre = sc.nextLine();
+		System.out.println("Introduce la ubicación de la gasolinera");
+		String ubi = sc.nextLine();
+		System.out.println("Introduce los litros de gasolina");
+		double litros95 = sc.nextDouble();
+		System.out.println("Introduce los litros de diésel");
+		double litrosDiesel = sc.nextDouble();
+		System.out.println("Introduce el precio de la gasolina");
+		double precio95 = sc.nextDouble();
+		System.out.println("Introduce el precio del diésel");
+		double precioDiesel = sc.nextDouble();
+		Fichero fichero = new Fichero();
+		fichero.agregarGasolinera(new Gasolinera(nombre, ubi, litros95, litrosDiesel, precio95, precioDiesel));
+
 	}
 
 	private static void mostrarPorPrecio() {
@@ -92,7 +140,8 @@ public class Main {
 	private static void mostrarPorUbicacion() {
 		Fichero fichero = new Fichero();
 		Gasolinera[] gasolineras = fichero.cargarGasolineras();
-		Arrays.sort(gasolineras, Comparator.comparing(Gasolinera::getUbicacion));
+		Comparator<Gasolinera> porPrecio95 = Comparator.comparingDouble(Gasolinera::getPrecio95);
+		Arrays.sort(gasolineras, porPrecio95);
 		listarGasolineras(gasolineras);
 	}
 
@@ -109,10 +158,10 @@ public class Main {
 	private static void listarGasolineras(Gasolinera[] gasolineras) {
 		System.out.println("Lista de Gasolineras: ");
 		for (Gasolinera g : gasolineras) {
-			System.out.print("Nombre: " + g.getNombre());
-			System.out.print("Ubicación: " + g.getUbicacion());
-			System.out.print("Gasolina 95: " + g.getLitros95() + "L | Precio: " + g.getPrecio95() + " €/L");
-			System.out.println("Diesel: " + g.getLitrosDiesel() + "L | Precio: " + g.getPrecioDiesel() + " €/L");
+			System.out.print("Nombre: " + g.getNombre() + " |");
+			System.out.print(" Ubicación: " + g.getUbicacion()+ " |");
+			System.out.print(" Gasolina 95: " + g.getLitros95() + "L | Precio: " + g.getPrecio95() + " €/L");
+			System.out.println(" Diesel: " + g.getLitrosDiesel() + "L | Precio: " + g.getPrecioDiesel() + " €/L");
 		}
 	}
 
@@ -181,9 +230,7 @@ public class Main {
 		}
 	}
 
-	private static void menuUsuario() {
-		// TODO: Implementar menú del usuario
-		System.out.println("[USUARIO] Menú del Usuario (en desarrollo)");
-	}
+
 
 }
+	

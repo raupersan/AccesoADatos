@@ -1,8 +1,9 @@
 package sin_SQL;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
-public class Gasolinera implements Serializable {
+public class Gasolinera implements Comparable<Gasolinera>, Serializable {
 	private String nombre;
 	private String ubicacion;
 	private double litros95;
@@ -68,8 +69,10 @@ public class Gasolinera implements Serializable {
 	public void setPrecioDiesel(double precioDiesel) {
 		this.precioDiesel = precioDiesel;
 	}
-
-	@Override
+	 @Override
+	    public int compareTo(Gasolinera gas) {
+	        return this.ubicacion.compareToIgnoreCase(gas.ubicacion);
+	    }
 	public String toString() {
 		return "Gasolinera " + nombre + ", ubicacion=" + ubicacion + ", litros95=" + litros95 + ", litrosDiesel="
 				+ litrosDiesel + ", precio95=" + precio95 + ", precioDiesel=" + precioDiesel;
