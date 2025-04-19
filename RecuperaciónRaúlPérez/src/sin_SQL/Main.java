@@ -50,6 +50,22 @@ public class Main {
 
 	private static void menuAdministrador() {
 		int opcion;
+		boolean admin = false;
+		do {
+			System.out.println("Introduce el número de administrador");
+			String numero = sc.nextLine();
+			if (numero.equals("12345"))
+				admin = true;
+			else {
+				System.out
+						.println("El número introducido no corresponder a un administrador, ¿quieres probar con otro?");
+				System.out.println("1. Continuar");
+				System.out.println("2. Salir");
+				int salida = sc.nextInt();
+				if (salida == 2)
+					return;
+			}
+		} while (!admin);
 		do {
 			System.out.println("¿Qué quieres hacer?");
 			System.out.println("1. Ver todos los datos de los clientes");
@@ -81,8 +97,20 @@ public class Main {
 
 		} while (opcion != 11);
 	}
+
 	private static void menuUsuario() {
 		int opcion;
+		Fichero fichero = new Fichero();
+		System.out.println("Introduce tu número de cliente para continuar.");
+		String numero = sc.nextLine();
+		Cliente cliente = fichero.cargarClienteDesdeFichero(numero);
+
+		if (cliente != null) {
+			System.out.println("Bienvenido, " + cliente.getNombre() + "!");
+		} else {
+			System.out.println("Cliente no encontrado.");
+		}
+
 		do {
 			System.out.println("¿Qué quieres hacer?");
 			System.out.println("1. Ver mis datos");
@@ -90,23 +118,23 @@ public class Main {
 			System.out.println("3. Visualizar los datos de las gasolineras según su ubicación");
 			System.out.println("4. Mostrar las gasolineras según los precios de las gasolinas");
 			System.out.println("5. Realizar ventas generando tickets");
-			System.out.println("10. Realizar informe del dinero invertido");
+			System.out.println("6. Realizar informe del dinero invertido");
 			System.out.println("7. Salir");
 			opcion = sc.nextInt();
 			switch (opcion) {
 			case 1 -> mostrarClientes();
-			case 4 -> mostrarUnCliente();
-			case 5 -> mostrarGasolineras();
-			case 6 -> mostrarPorUbicacion();
-			case 7 -> mostrarPorPrecio();
-			case 8 -> agregarGasolinera();
-			case 9 -> realizarVenta();
+			case 2 -> mostrarUnCliente();
+			case 3 -> mostrarGasolineras();
+			case 4 -> mostrarPorUbicacion();
+			case 5 -> mostrarPorPrecio();
+			case 6 -> agregarGasolinera();
+			case 7 -> System.out.println("Saliendo del menú de administrador...");
 			// case 10 -> mostrarEstadisticas();
-			case 11 -> System.out.println("Saliendo del menú de administrador...");
 			default -> System.out.println("Opción inválida");
 			}
-	}while (opcion !=7);
-}
+		} while (opcion != 7);
+	}
+
 	private static void realizarVenta() {
 		// TODO Auto-generated method stub
 	}
@@ -159,7 +187,7 @@ public class Main {
 		System.out.println("Lista de Gasolineras: ");
 		for (Gasolinera g : gasolineras) {
 			System.out.print("Nombre: " + g.getNombre() + " |");
-			System.out.print(" Ubicación: " + g.getUbicacion()+ " |");
+			System.out.print(" Ubicación: " + g.getUbicacion() + " |");
 			System.out.print(" Gasolina 95: " + g.getLitros95() + "L | Precio: " + g.getPrecio95() + " €/L");
 			System.out.println(" Diesel: " + g.getLitrosDiesel() + "L | Precio: " + g.getPrecioDiesel() + " €/L");
 		}
@@ -230,7 +258,4 @@ public class Main {
 		}
 	}
 
-
-
 }
-	

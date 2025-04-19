@@ -84,6 +84,28 @@ public class Fichero {
 		}
 
 	}
+	public Cliente cargarClienteDesdeFichero(String numero) {
+	    Path ruta = Path.of("clientes", numero + ".txt");
+
+	    if (!Files.exists(ruta)) {
+	        System.out.println("El cliente con número " + numero + " no existe.");
+	        return null;
+	    }
+
+	    try {
+	        String contenido = Files.readString(ruta);
+	        String[] lineas = contenido.split("\n");
+
+	        String nombre = lineas[1].split(": ")[1];
+	        String direccion = lineas[2].split(": ")[1];
+
+	        return new Cliente(numero, nombre, direccion);
+
+	    } catch (IOException e) {
+	        System.out.println("Error leyendo el archivo del cliente: " + e.getMessage());
+	        return null;
+	    }
+	}
 
 	public static void guardarClienteEnFichero(Cliente cliente) {
 		try {
