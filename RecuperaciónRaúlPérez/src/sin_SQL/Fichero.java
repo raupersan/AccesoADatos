@@ -93,16 +93,23 @@ public class Fichero {
 	    }
 
 	    try {
-	        String contenido = Files.readString(ruta);
-	        String[] lineas = contenido.split("\n");
+	        String linea = Files.readString(ruta).trim();
+	        String[] partes = linea.split(", ");
+	        String numeroCliente = partes[0].split(":")[1];
+	        String nombre = partes[1].split("=")[1];
+	        String direccion = partes[2].split("=")[1];
+	        for (int i = 3; i < partes.length - 1; i++) {
+	            direccion += ", " + partes[i];
+	        }
+	        boolean activo = Boolean.parseBoolean(partes[partes.length - 1].split("=")[1]);
 
-	        String nombre = lineas[1].split(": ")[1];
-	        String direccion = lineas[2].split(": ")[1];
-
-	        return new Cliente(numero, nombre, direccion);
+	        return new Cliente(numeroCliente, nombre, direccion, activo);
 
 	    } catch (IOException e) {
 	        System.out.println("Error leyendo el archivo del cliente: " + e.getMessage());
+	        return null;
+	    } catch (Exception e) {
+	        System.out.println("Error al interpretar los datos del cliente: " + e.getMessage());
 	        return null;
 	    }
 	}

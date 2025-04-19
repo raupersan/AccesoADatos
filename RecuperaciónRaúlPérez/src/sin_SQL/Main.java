@@ -100,17 +100,18 @@ public class Main {
 
 	private static void menuUsuario() {
 		int opcion;
-		Fichero fichero = new Fichero();
-		System.out.println("Introduce tu número de cliente para continuar.");
-		String numero = sc.nextLine();
-		Cliente cliente = fichero.cargarClienteDesdeFichero(numero);
+		boolean user = false;
+		do {
+			Fichero fichero = new Fichero();
+			System.out.println("Introduce tu número de cliente para continuar.");
+			String numero = sc.nextLine();
+			Cliente cliente = fichero.cargarClienteDesdeFichero(numero);
 
-		if (cliente != null) {
-			System.out.println("Bienvenido, " + cliente.getNombre() + "!");
-		} else {
-			System.out.println("Cliente no encontrado.");
-		}
-
+			if (cliente != null) {
+				System.out.println("Bienvenido, " + cliente.getNombre() + "!");
+				user = true;
+			}
+		} while (!user);
 		do {
 			System.out.println("¿Qué quieres hacer?");
 			System.out.println("1. Ver mis datos");
