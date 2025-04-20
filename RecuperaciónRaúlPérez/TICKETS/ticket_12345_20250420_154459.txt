@@ -1,0 +1,10 @@
+----- TICKET DE COMPRA -----
+Fecha: 20/04/2025 15:44:59
+Cliente: Luis García (12345)
+Gasolinera: 5
+Tipo de Gasolina: 1
+Litros: 1,00
+Precio por litro: 1,00 €
+----------------------------
+TOTAL: 1,00 €
+----------------------------

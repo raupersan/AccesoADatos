@@ -116,6 +116,7 @@ public class Main {
 		Cliente cliente = fichero.cargarClienteDesdeFichero(numero);
 
 		do {
+			System.out.println("");
 			System.out.println("¿Qué quieres hacer?");
 			System.out.println("1. Ver mis datos");
 			System.out.println("2. Visualizar los datos de las gasolineras");
@@ -130,13 +131,69 @@ public class Main {
 			case 2 -> mostrarGasolineras();
 			case 3 -> mostrarPorUbicacion();
 			case 4 -> mostrarPorPrecio();
-			case 5 -> realizarVenta();
-			case 6 -> agregarGasolinera();
+			case 5 -> realizarVenta(cliente);
+			case 6 -> fichero.generarInformeCliente(cliente);
 			case 7 -> System.out.println("Saliendo del menú de administrador...");
 			// case 10 -> mostrarEstadisticas();
 			default -> System.out.println("Opción inválida");
 			}
 		} while (opcion != 7);
+	}
+
+	private static void realizarVenta(Cliente cliente) {
+		Scanner sc = new Scanner(System.in);
+		Fichero fichero = new Fichero();
+		Gasolinera[] gasolineras = fichero.cargarGasolineras();
+
+		System.out.println("Gasolineras disponibles:");
+		for (int i = 0; i < gasolineras.length; i++) {
+			System.out.printf("%d. %s (%s)%n", i + 1, gasolineras[i].getNombre(), gasolineras[i].getUbicacion());
+		}
+
+		System.out.print("Selecciona una gasolinera: ");
+		int opcion = sc.nextInt() - 1;
+		if (opcion < 0 || opcion >= gasolineras.length) {
+			System.out.println("Opción inválida.");
+			return;
+		}
+
+		Gasolinera seleccionada = gasolineras[opcion];
+
+		System.out.println("Tipo de combustible");
+		System.out.println("1. Gasolina 95");
+		System.out.println("2. Diesel");
+		int tipo = sc.nextInt();
+
+		System.out.print("Cantidad de litros: ");
+		double litros = sc.nextDouble();
+
+		double disponible = tipo == 1 ? seleccionada.getLitros95()
+				: tipo == 2 ? seleccionada.getLitrosDiesel() : -1;
+
+		if (disponible == -1) {
+			System.out.println("Tipo de combustible no reconocido.");
+			return;
+		}
+
+		if (disponible < litros) {
+			System.out.println("No hay suficiente " + tipo + ". Disponible: " + disponible + " litros.");
+			return;
+		}
+
+		if (tipo == 1) {
+			seleccionada.setLitros95(disponible - litros);
+		} else {
+			seleccionada.setLitrosDiesel(disponible - litros);
+		}
+
+		double precio = tipo == 1 ? seleccionada.getPrecio95()
+				: seleccionada.getPrecioDiesel();
+
+		fichero.generarTicket(cliente, seleccionada.getNombre(), tipo, litros, precio);
+
+		fichero.guardarGasolineras(gasolineras);
+
+		System.out.println("Venta realizada con éxito.");
 	}
 
 	private static void mostrarClientes(String numero) {
@@ -155,7 +212,73 @@ public class Main {
 	}
 
 	private static void realizarVenta() {
+		Scanner sc = new Scanner(System.in);
+		Fichero fichero = new Fichero();
+		Gasolinera[] gasolineras = fichero.cargarGasolineras();
+		String numeroCliente;
+		Cliente cliente;
+		boolean valido =false;
+		do {
+			System.out.println("Escribe el número del cliente sobre el que quieres realizar la venta");
+			numeroCliente = sc.nextLine();
+			 cliente = fichero.cargarClienteDesdeFichero(numeroCliente);
+
+			if (cliente != null) {
+				System.out.println("Bienvenido, " + cliente.getNombre() + "!");
+				valido = true;
+			}
+		} while (!valido);
+		System.out.println("Gasolineras disponibles:");
+		for (int i = 0; i < gasolineras.length; i++) {
+			System.out.printf("%d. %s (%s)%n", i + 1, gasolineras[i].getNombre(), gasolineras[i].getUbicacion());
+		}
+
+		System.out.print("Selecciona una gasolinera: ");
+		int opcion = sc.nextInt() - 1;
+		if (opcion < 0 || opcion >= gasolineras.length) {
+			System.out.println("Opción inválida.");
+			return;
+		}
+
+		Gasolinera seleccionada = gasolineras[opcion];
+
+		System.out.println("Tipo de combustible");
+		System.out.println("1. Gasolina 95");
+		System.out.println("2. Diesel");
+		int tipo = sc.nextInt();
+
+		System.out.print("Cantidad de litros: ");
+		double litros = sc.nextDouble();
+
+		double disponible = tipo ==1 ? seleccionada.getLitros95()
+				: tipo == 2 ? seleccionada.getLitrosDiesel() : -1;
+
+		if (disponible == -1) {
+			System.out.println("Tipo de combustible no reconocido.");
+			return;
+		}
+
+		if (disponible < litros) {
+			System.out.println("No hay suficiente " + tipo + ". Disponible: " + disponible + " litros.");
+			return;
+		}
+
+		if (tipo == 1) {
+			seleccionada.setLitros95(disponible - litros);
+		} else {
+			seleccionada.setLitrosDiesel(disponible - litros);
+		}
+
+		double precio = tipo == 1 ? seleccionada.getPrecio95()
+				: seleccionada.getPrecioDiesel();
+
+		fichero.generarTicket(cliente, seleccionada.getNombre(), tipo, litros, precio);
+
+		fichero.guardarGasolineras(gasolineras);
+
+		System.out.println("Venta realizada con éxito.");
 	}
+	
 
 	private static void agregarGasolinera() {
 		System.out.println("Introduce el nombre de la gasolinera");
