@@ -101,10 +101,11 @@ public class Main {
 	private static void menuUsuario() {
 		int opcion;
 		boolean user = false;
+		Fichero fichero = new Fichero();
+		String numero;
 		do {
-			Fichero fichero = new Fichero();
 			System.out.println("Introduce tu número de cliente para continuar.");
-			String numero = sc.nextLine();
+			numero = sc.nextLine();
 			Cliente cliente = fichero.cargarClienteDesdeFichero(numero);
 
 			if (cliente != null) {
@@ -112,6 +113,8 @@ public class Main {
 				user = true;
 			}
 		} while (!user);
+		Cliente cliente = fichero.cargarClienteDesdeFichero(numero);
+
 		do {
 			System.out.println("¿Qué quieres hacer?");
 			System.out.println("1. Ver mis datos");
@@ -123,11 +126,11 @@ public class Main {
 			System.out.println("7. Salir");
 			opcion = sc.nextInt();
 			switch (opcion) {
-			case 1 -> mostrarClientes();
-			case 2 -> mostrarUnCliente();
-			case 3 -> mostrarGasolineras();
-			case 4 -> mostrarPorUbicacion();
-			case 5 -> mostrarPorPrecio();
+			case 1 -> mostrarClientes(cliente.getNumero());
+			case 2 -> mostrarGasolineras();
+			case 3 -> mostrarPorUbicacion();
+			case 4 -> mostrarPorPrecio();
+			case 5 -> realizarVenta();
 			case 6 -> agregarGasolinera();
 			case 7 -> System.out.println("Saliendo del menú de administrador...");
 			// case 10 -> mostrarEstadisticas();
@@ -136,8 +139,22 @@ public class Main {
 		} while (opcion != 7);
 	}
 
+	private static void mostrarClientes(String numero) {
+		File archivo = new File("clientes/" + numero + ".txt");
+		if (!archivo.exists()) {
+			System.out.println("El cliente no existe.");
+			return;
+		}
+
+		try {
+			String contenido = Files.readString(archivo.toPath());
+			System.out.println(contenido);
+		} catch (IOException e) {
+			System.out.println("Error leyendo el archivo del cliente: " + e.getMessage());
+		}
+	}
+
 	private static void realizarVenta() {
-		// TODO Auto-generated method stub
 	}
 
 	private static void agregarGasolinera() {
