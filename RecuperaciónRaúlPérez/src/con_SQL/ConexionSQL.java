@@ -106,4 +106,25 @@ public class ConexionSQL {
         }
         return rol;
     }
+    public static int sacarRol(String alias, String clave) {
+        int rol = -1;
+        String consulta = "SELECT rol FROM usuario WHERE Alias = ? AND Clave = ?";
+        try {
+            Class.forName(CONTROLADOR);
+            Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
+            if (conexion != null) {
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+                sentencia.setString(1, alias);
+                sentencia.setString(2, clave);
+                ResultSet rs = sentencia.executeQuery();
+                if (rs.next()) {
+                    rol = rs.getInt("rol");
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return rol;
+    }
+
 }
